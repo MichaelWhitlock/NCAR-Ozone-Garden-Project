@@ -1,0 +1,165 @@
+@charset "UTF-8";
+/* CSS Document */
+@font-face {
+    font-family: 'Poppins';
+    src: url('/styles/4/fonts/Poppins-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'UbuntuRegular';
+    src: url('/styles/4/fonts/Ubuntu-R-webfont.eot');
+    src: url('/styles/4/fonts/Ubuntu-R-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/styles/4/fonts/Ubuntu-R-webfont.woff') format('woff'),
+         url('/styles/4/fonts/Ubuntu-R-webfont.ttf') format('truetype'),
+         url('/styles/4/fonts/Ubuntu-R-webfont.svg#../fonts/UbuntuRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'UbuntuItalic';
+    src: url('/styles/4/fonts/Ubuntu-RI-webfont.eot');
+    src: url('/styles/4/fonts/Ubuntu-RI-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/styles/4/fonts/Ubuntu-RI-webfont.woff') format('woff'),
+         url('/styles/4/fonts/Ubuntu-RI-webfont.ttf') format('truetype'),
+         url('/styles/4/fonts/Ubuntu-RI-webfont.svg#../fonts/UbuntuItalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'UbuntuBold';
+    src: url('/styles/4/fonts/Ubuntu-B-webfont.eot');
+    src: url('/styles/4/fonts/Ubuntu-B-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/styles/4/fonts/Ubuntu-B-webfont.woff') format('woff'),
+         url('/styles/4/fonts/Ubuntu-B-webfont.ttf') format('truetype'),
+         url('/styles/4/fonts/Ubuntu-B-webfont.svg#../fonts/UbuntuBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'UbuntuBoldItalic';
+    src: url('/styles/4/fonts/Ubuntu-BI-webfont.eot');
+    src: url('/styles/4/fonts/Ubuntu-BI-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/styles/4/fonts/Ubuntu-BI-webfont.woff') format('woff'),
+         url('/styles/4/fonts/Ubuntu-BI-webfont.ttf') format('truetype'),
+         url('/styles/4/fonts/Ubuntu-BI-webfont.svg#../fonts/UbuntuBoldItalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'UbuntuLight';
+    src: url('/styles/4/fonts/Ubuntu-L-webfont.eot');
+    src: url('/styles/4/fonts/Ubuntu-L-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/styles/4/fonts/Ubuntu-L-webfont.woff') format('woff'),
+         url('/styles/4/fonts/Ubuntu-L-webfont.ttf') format('truetype'),
+         url('/styles/4/fonts/Ubuntu-L-webfont.svg#../fonts/UbuntuLight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'UbuntuLightItalic';
+    src: url('/styles/4/fonts/Ubuntu-LI-webfont.eot');
+    src: url('/styles/4/fonts/Ubuntu-LI-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/styles/4/fonts/Ubuntu-LI-webfont.woff') format('woff'),
+         url('/styles/4/fonts/Ubuntu-LI-webfont.ttf') format('truetype'),
+         url('/styles/4/fonts/Ubuntu-LI-webfont.svg#../fonts/UbuntuLightItalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'UbuntuMedium';
+    src: url('/styles/4/fonts/Ubuntu-M-webfont.eot');
+    src: url('/styles/4/fonts/Ubuntu-M-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/styles/4/fonts/Ubuntu-M-webfont.woff') format('woff'),
+         url('/styles/4/fonts/Ubuntu-M-webfont.ttf') format('truetype'),
+         url('/styles/4/fonts/Ubuntu-M-webfont.svg#../fonts/UbuntuMedium') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'UbuntuMediumItalic';
+    src: url('/styles/4/fonts/Ubuntu-MI-webfont.eot');
+    src: url('/styles/4/fonts/Ubuntu-MI-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/styles/4/fonts/Ubuntu-MI-webfont.woff') format('woff'),
+         url('/styles/4/fonts/Ubuntu-MI-webfont.ttf') format('truetype'),
+         url('/styles/4/fonts/Ubuntu-MI-webfont.svg#../fonts/UbuntuMediumItalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'UbuntuCondensedRegular';
+    src: url('/styles/4/fonts/Ubuntu-C-webfont.eot');
+    src: url('/styles/4/fonts/Ubuntu-C-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/styles/4/fonts/Ubuntu-C-webfont.woff') format('woff'),
+         url('/styles/4/fonts/Ubuntu-C-webfont.ttf') format('truetype'),
+         url('/styles/4/fonts/Ubuntu-C-webfont.svg#../fonts/UbuntuCondensedRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+@font-face {
+    font-family: 'CantarellRegular';
+    src: url('/styles/4/fonts/Cantarell-Regular-webfont.eot');
+    src: url('/styles/4/fonts/Cantarell-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/styles/4/fonts/Cantarell-Regular-webfont.woff') format('woff'),
+         url('/styles/4/fonts/Cantarell-Regular-webfont.ttf') format('truetype'),
+         url('/styles/4/fonts/Cantarell-Regular-webfont.svg#CantarellRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'CantarellOblique';
+    src: url('/styles/4/fonts/Cantarell-Oblique-webfont.eot');
+    src: url('/styles/4/fonts/Cantarell-Oblique-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/styles/4/fonts/Cantarell-Oblique-webfont.woff') format('woff'),
+         url('/styles/4/fonts/Cantarell-Oblique-webfont.ttf') format('truetype'),
+         url('/styles/4/fonts/Cantarell-Oblique-webfont.svg#CantarellOblique') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'CantarellBold';
+    src: url('/styles/4/fonts/Cantarell-Bold-webfont.eot');
+    src: url('/styles/4/fonts/Cantarell-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/styles/4/fonts/Cantarell-Bold-webfont.woff') format('woff'),
+         url('/styles/4/fonts/Cantarell-Bold-webfont.ttf') format('truetype'),
+         url('/styles/4/fonts/Cantarell-Bold-webfont.svg#CantarellBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'CantarellBoldOblique';
+    src: url('/styles/4/fonts/Cantarell-BoldOblique-webfont.eot');
+    src: url('/styles/4/fonts/Cantarell-BoldOblique-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/styles/4/fonts/Cantarell-BoldOblique-webfont.woff') format('woff'),
+         url('/styles/4/fonts/Cantarell-BoldOblique-webfont.ttf') format('truetype'),
+         url('/styles/4/fonts/Cantarell-BoldOblique-webfont.svg#CantarellBoldOblique') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}

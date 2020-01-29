@@ -1,0 +1,60 @@
+<!-- scroll to top toolbar -->
+<a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
+
+
+<!-- js includes -->
+<script src="/styles/um/js/jquery.min.js"></script>
+<script src="/styles/um/js/popper.min.js"></script>
+<script src="/styles/um/js/bootstrap.min.js"></script>
+<script src="/styles/um/js/fancybox.min.js"></script> 
+<script src="/styles/um/js/flexslider.min.js"></script>
+<script src="/styles/um/js/custom.js"></script>
+<script src="/styles/um/js/jquery.tablesorter.min.js"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+
+
+<script>
+// Script for table sorting
+$(".sort").tablesorter({ 
+    widgets: ['zebra'],
+    headers: {
+        // set the class names to not be sorted
+        '.sort-no' : {
+            // disable it by setting the property sorter to false
+            sorter: false
+        }
+    }
+});
+
+
+// Script for calendar dropdown on inputs
+$('.datepicka').each(function(i, obj) {
+    // Grab the ID
+    var datepickaID = $(this).attr('id');
+
+    // Make it a picka
+    $( "#" + datepickaID ).datepicker();
+});
+
+
+// Script for the autoscroll back to top
+$(window).scroll(function(){
+	// show the scroll bar
+	if ($(this).scrollTop() > 100) {
+		$('.scrollup').fadeIn();
+	} 
+	// hide the scroll bar
+	else {
+		$('.scrollup').fadeOut();
+	}
+});
+
+// clickong on the scroll bar
+$('.scrollup').click(function(){
+	$("html, body").animate({ scrollTop: 0 }, 1000);
+	return false;
+});
+</script>
