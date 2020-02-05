@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Login</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- css -->
+    [% INSERT '/var/www/html/styles/um/css/css-include.html' %]
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+        <script src="/styles/4/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body class="body-signin">
+    <!--
+    [% FOREACH p IN cgi.param %]     
+        [% p %] => [% cgi.param(p) %]   
+    [% END %]
+    -->
+
+    
+    <form class="form-signin" method="POST" action="ozone_login.pl">
+        <img class="mb-4 form-signin-logo" src="/Images/logos/logo-ncar-600.png" alt="NCAR Logo">
+        <h3>Ozone Garden Login</h3>
+        <p class="my-0 text-cesm mb-1 small">Please login using your credentials</p>
+
+        [% IF msg %]
+        <div class="alert alert-danger" role="alert">
+            [% msg %]
+        </div>
+        [% END %]
+
+
+        <div class="form-group">
+            <label for="email" class="mb-0">Email</label>
+            <input name="email" type="text" id="email" class="form-control" placeholder="..." [% IF email %] value="[% email %]" [% END %]  required autofocus>
+        </div>
+
+        <div class="form-group">
+            <label for="password" class="mb-0">Password</label>
+            <input name="password" type="password" id="password" class="form-control" placeholder="..." required>
+        </div>
+
+        [% IF after != 'none' %]
+        <input type="hidden" name="after" value="[% after %]">
+        [% END %]
+        <button class="btn btn-lg btn-primary btn-block mt-4" type="submit">Login</button>
+    </form>
+
+    <!-- javascript -->
+    [% INSERT '/var/www/html/styles/um/js/js-include.html' %]
+</body>
+</html>
