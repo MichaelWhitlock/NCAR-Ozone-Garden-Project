@@ -24,6 +24,7 @@
     <meta property="og:image" content="https://www.cgd.ucar.edu/Images/ws2-1.png">
 </head>
 
+
 <body>
 <div id="wrapper">
     <!-- navbar include -->
@@ -105,21 +106,8 @@
                             </div>
                         </div>
                 </div>
-
-                <div class="col-lg-4">
-                    <aside class="right-sidebar">
-                        <!-- ozone garden quicklinks include -->
-                        [% INSERT '/var/www/html/styles/um/includes/col-lg-4/ozone-inc.html' %]
-
-
-                        <!-- Research Include -->
-                        [% INSERT '/var/www/html/styles/um/includes/col-lg-4/research-inc.html' %]
-                    </aside>
-                </div>
-
-
+<!-- this is where the side bar was to make it appear next to submission-->
             </div>
-        </form>
 
 
             [% IF msg_err != "" %] 
@@ -136,37 +124,43 @@
             [% END %]
 
                 <div class="row mt-5">
-                        <div class="col">
-                            <p class="lead">Randomly choose 10 leaves on this plant. For each leaf, what is the estimated percent of leaf area that has visible ozone damage?</p>
-                            <p>Use the injury scale and accompanying photos on the next page to categorize the injury to the best of your ability, recording the index value in the table below the leaf photos. The leaf number is only used to identify that there are different leaves, so the order or number does not matter. Be careful to collect data from each leaf only once.</p>
+                    <div class="col">
+                        <p class="lead">Randomly choose 10 leaves on this plant. For each leaf, what is the estimated percent of leaf area that has visible ozone damage?</p>
+                        <p>Use the injury scale and accompanying photos on the next page to categorize the injury to the best of your ability, recording the index value in the table below the leaf photos. The leaf number is only used to identify that there are different leaves, so the order or number does not matter. Be careful to collect data from each leaf only once.</p>
+                    </div>
+                </div>
+
+                <div class="row mt-0 bg-white rounded-top pt-3">
+                    <div class="col">
+                        <div class="center">
+                            <h6 class="clear-marginbot">Injury Scale</h6>
+                            <h5 class="clear-marginbot">Index Number = Percent Affected</h5>
                         </div>
+
+
+                    <input type="image" src="/Images/croppedleaves/1.png" name="leaf1" value="1" />
+                    <input type="image" src="/Images/croppedleaves/2.png" name="leaf1" value="2" />
+                    <input type="image" src="/Images/croppedleaves/3.png" name="leaf1" value="3" />
+                    <input type="image" src="/Images/croppedleaves/4.png" name="leaf1" value="4" />
+                    <input type="image" src="/Images/croppedleaves/5.png" name="leaf1" value="5" />
+                    <input type="image" src="/Images/croppedleaves/6.png" name="leaf1" value="6" />
+
+                    <select class="form-control" name="leaf9">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                    </select>
+
                     </div>
+                </div>
 
-                    <div class="row mt-0 bg-white rounded-top pt-3">
-                        <div class="col">
-                            <div class="center">
-                                <h6 class="clear-marginbot">Injury Scale</h6>
-                                <h5 class="clear-marginbot">Index Number = Percent Affected</h5>
-                            </div>
-
-
-                        <input type="image" src="/Images/croppedleaves/1.png" name="leaf1" value="1" />
-                        <input type="image" src="/Images/croppedleaves/2.png" name="leaf1" value="2" />
-                        <input type="image" src="/Images/croppedleaves/3.png" name="leaf1" value="3" />
-                        <input type="image" src="/Images/croppedleaves/4.png" name="leaf1" value="4" />
-                        <input type="image" src="/Images/croppedleaves/5.png" name="leaf1" value="5" />
-                        <input type="image" src="/Images/croppedleaves/6.png" name="leaf1" value="6" />
-
-
-                        </div>
-                    </div>
-
-                    <div class="row mt-5">
-                        <input type="submit" class="btn btn-primary btn-block" name="submit" value="Submit"></input>
-                    </div>
-
-                
-            
+                <div class="row mt-5">
+                    <input type="submit" class="btn btn-primary btn-block" name="submit" value="Submit"></input>
+                </div>
+            </form>      
         </div>
     </section>
 
