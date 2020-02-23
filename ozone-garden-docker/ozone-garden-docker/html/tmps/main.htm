@@ -23,8 +23,14 @@
     <meta property="og:description" content="Information about the Ozone Garden Observation project at NCAR and form to contribute your observations">
     <meta property="og:image" content="https://www.cgd.ucar.edu/Images/ws2-1.png">
 
-    <!-- Testing Plot.ly -->
+    <!-- Testing Plot.ly and Map-->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>
    
 
 </head>
@@ -74,45 +80,72 @@
                         
                         <p>Unlike the ozone layer found high in the atmosphere that protects us from the Sun’s harmful rays, ground-level (“bad”) ozone is a toxic air pollutant that impacts all living organisms. High concentrations of ground-level ozone cause human health problems like asthma and harm plants in ways that affect us, like reducing yields in agricultural crops and the amount of carbon stored in trees. Sometimes you can even see ozone damage on the leaves of sensitive plants! In this garden, we planted certain varieties of plants that show visible signs of damage from ozone pollution. Help us identify and track ozone damage as it shows up!</p>
 
-                        <div ID = "tester" style="width:700px;height:400px">
+                        <div ID = "tester" style="width:100%;height:400px">
                             <script type="text/javascript">
                                 TESTER = document.getElementById('tester');
 
                                 var Potato = {
-                                x: [1, 2, 3, 4],
-  y: [10, 15, 13, 17],
-  type: 'scatter'
-};
+                                x: [140, 200, 220, 240],
+                                y: [10, 30, 70, 60],
+                                  type: 'scatter',
+                                  name: '2018'
+                                };
+                                var Coneflower = {
+                                  x: [140, 157, 200, 220, 240],
+                                  y: [16, 5,30, 40, 32],
+                                  type: 'scatter',
+                                  name: '2019'
+                                };
+                                var data = [Coneflower, Potato];
+                                var layout = {title: 'NCAR Mesa Lab: Coneflower',
+                                            xaxis: {
+                                                title: 'Day Of Year',
+                                                titlefont: {
+                                                  family: 'Arial, sans-serif',
+                                                  size: 18,
+                                                  color: 'grey'
+                                                },},
+                                             yaxis: {
+                                                    title: 'Proportion Of Injured Leaves',
+                                                    titlefont: {
+                                                      family: 'Arial, sans-serif',
+                                                      size: 18,
+                                                      color: 'grey'
+                                                    },}
 
-var Coneflower = {
-  x: [1, 2, 3, 4],
-  y: [16, 5, 11, 9],
-  type: 'scatter'
-};
 
-var data = [Coneflower, Potato];
 
-Plotly.newPlot(TESTER, data);
+
+                                };
+                                Plotly.newPlot(TESTER, data, layout, {displayModeBar: false});
                             </script>
                             
                         </div>
-                        <div ID = "Tester2" style="width:700px;height:400px">
-                            <script type="text/javascript">
-                                TESTER2 = document.getElementById("Tester2");
-                                var data = [{
- type: "choroplethmapbox", name: "US states", geojson: "https://raw.githubusercontent.com/python-visualization/folium/master/examples/data/us-states.json", locations: [ "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY" ],
-z: [ 141, 140, 155, 147, 132, 146, 151, 137, 146, 136, 145, 141, 149, 151, 138, 158, 164, 141, 146, 145, 142, 150, 155, 160, 156, 161, 147, 164, 150, 152, 155, 167, 145, 146, 151, 154, 161, 145, 155, 150, 151, 162, 172, 169, 170, 151, 152, 173, 160, 176 ],
-zmin: 25, zmax: 280, colorbar: {y: 0, yanchor: "bottom", title: {text: "US states", side: "right"}}}
- ];
+                        <br>
+                        <div id="mapid" style="width:100%;height:400px">
+                        </div>
+                        <script type="text/javascript">
+                                var greenIcon = L.icon({
+                                    iconUrl: 'Images/green-leaf.png',
+                                    iconSize: [38,45],
 
-var layout = {mapbox: {style: "dark", center: {lon: -110, lat: 50}, zoom: 0.8}, width: 600, height: 400, margin: {t: 0, b: 0}};
+                                })
+                                var mymap = L.map('mapid').setView([39.5, -95], 4);
+                                L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                                maxZoom: 18,
+                                id: 'mapbox/streets-v11',
+                                tileSize: 512,
+                                zoomOffset: -1,
+                                accessToken: 'pk.eyJ1IjoiaHVudGVyNTI4MCIsImEiOiJjazZ0cDF5dWUwMWk1M21wbm8wanUxcnBnIn0.Kx78AVroooRQnU_oQlJ8qg'
+                            }).addTo(mymap);
+                                var marker = L.marker([39.9783, -105.275],{icon: greenIcon}).addTo(mymap);
+                                marker.bindPopup("<b>NCAR Boulder</b>")
 
-var config = {mapboxAccessToken: "pk.eyJ1IjoiaHVudGVyNTI4MCIsImEiOiJjazZ0cDF5dWUwMWk1M21wbm8wanUxcnBnIn0.Kx78AVroooRQnU_oQlJ8qg"};
-
-Plotly.newPlot(TESTER2, data, layout, config);
                             </script>
 
-                        </div>
+
+                        
 
                         <br>
 
