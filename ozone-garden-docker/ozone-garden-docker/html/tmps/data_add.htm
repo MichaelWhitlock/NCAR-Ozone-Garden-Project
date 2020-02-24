@@ -123,6 +123,7 @@
                 </div>
             [% END %]
 
+            <main class="row col-md-10">
                 <div class="row mt-5">
                     <div class="col">
                         <p class="lead">Randomly choose 10 leaves on this plant. For each leaf, what is the estimated percent of leaf area that has visible ozone damage?</p>
@@ -130,40 +131,55 @@
                     </div>
                 </div>
 
-                <div class="row mt-0 bg-white rounded-top pt-3">
-                    <div class="col">
+                <div class="row mt-0 bg-white rounded-top pt-3 center-block">
+                    <div class="col-md-10 center-block">
                         <div class="center">
                             <h6 class="clear-marginbot">Injury Scale</h6>
                             <h5 class="clear-marginbot">Index Number = Percent Affected</h5>
                         </div>
 
+                        <div class="row">
+                        <div class="col-md-4 col-xs-6">
+                        <input type="radio" id="leaf1" name="leaf1" value="1">
+                        <label for="leaf1"><img src="/Images/croppedleaves/1.png"></label>
+                        </div>
 
-                    <input type="radio" id="leaf1" name="leaf1" value="1">
-                    <label for="leaf1"><img src="/Images/croppedleaves/1.png"></label>
+                        <div class="col-md-4">
+                        <input type="radio" id="leaf2" name="leaf1" value="2">
+                        <label for="leaf2"><img src="/Images/croppedleaves/2.png"></label>
+                        </div>
 
+                        <div class="col-md-4">
+                        <input type="radio" id="leaf3" name="leaf1" value="3">
+                        <label for="leaf3"><img src="/Images/croppedleaves/3.png"></label>
+                        </div></div>
 
-                    <input type="radio" id="leaf2" name="leaf1" value="2">
-                    <label for="leaf2"><img src="/Images/croppedleaves/2.png"></label>
+                        <div class="row">
+                        <div class="col-md-4">
+                        <input type="radio" id="leaf4" name="leaf1" value="4">
+                        <label for="leaf4"><img src="/Images/croppedleaves/4.png"></label>
+                        </div>
 
-                    <input type="radio" id="leaf3" name="leaf1" value="3">
-                    <label for="leaf3"><img src="/Images/croppedleaves/3.png"></label>
+                        <div class="col-md-4">
+                        <input type="radio" id="leaf5" name="leaf1" value="5">
+                        <label for="leaf5"><img src="/Images/croppedleaves/5.png"></label>
+                        </div>
 
-                    <input type="radio" id="leaf4" name="leaf1" value="4">
-                    <label for="leaf4"><img src="/Images/croppedleaves/4.png"></label>
-
-                    <input type="radio" id="leaf5" name="leaf1" value="5">
-                    <label for="leaf5"><img src="/Images/croppedleaves/5.png"></label>
-
-                    <input type="radio" id="leaf6" name="leaf1" value="6">
-                    <label for="leaf6"><img src="/Images/croppedleaves/6.png"></label>
+                        <div class="col-md-4">
+                        <input type="radio" id="leaf6" name="leaf1" value="6">
+                        <label for="leaf6"><img src="/Images/croppedleaves/6.png"></label>
+                        </div></div>
 
                     </div>
                 </div>
 
+                </main>
+
                 <div class="row mt-5">
                     <input type="submit" class="btn btn-primary btn-block" name="submit" value="Submit"></input>
                 </div>
-            </form>      
+            </form>   
+              
         </div>
     </section>
 
