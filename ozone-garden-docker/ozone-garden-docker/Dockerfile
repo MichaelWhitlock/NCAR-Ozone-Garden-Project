@@ -8,12 +8,15 @@ USER root
 RUN yum -y update
 
 # installing perl CPANM for installing modules
-RUN yum -y install cpanm gcc perl-App-cpanminus perl-Config-Tiny perl-CGI-Session && yum clean all
+RUN yum -y install cpanm gcc perl-App-cpanminus perl-Config-Tiny perl-CGI-Session perl-DBI && yum clean all
 
 # installing perl modules
 RUN cpanm Template
 RUN cpanm Time::Piece
 RUN cpanm Text::CSV
+# RUN cpan DBD::mysql
+
+RUN yum -y install "perl(DBD::mysql)"
 
 # installing apache web server
 RUN yum -y install httpd
