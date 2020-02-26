@@ -11,7 +11,7 @@ use DBI;
 use Text::CSV;
 
 # uncomment line below to send debug messages to the browser, comment back when ready for production
-#use CGI::Carp qw( warningsToBrowser fatalsToBrowser );
+use CGI::Carp qw( warningsToBrowser fatalsToBrowser );
 
 
 # time vars
@@ -28,10 +28,23 @@ my $email_ryanj = 'ryanj@ucar.edu';
 # cgi vars
 my $cgi = CGI->new;
 
+
+
 # tt vars
 my %tt_options = (INCLUDE_PATH => 'tmps', ABSOLUTE => 1, EVAL_PERL => 1);
 my $tt = Template->new(\%tt_options);
-my $tt_vars;
+
+#Testing Sending javascript variables using templating - Hunter
+my $tt_vars = {
+                tester => "<script type='text/javascript'>var Coneflower = {
+                                              x: [140, 157, 200, 220, 240],
+                                              y: [16, 5,30, 40, 32],
+                                              type: 'scatter',
+                                              name: '2019'
+                                            };</script>",
+                tester2 => $cgi->param('MapButton'),
+
+            };
 
 
 # checking for a form submission

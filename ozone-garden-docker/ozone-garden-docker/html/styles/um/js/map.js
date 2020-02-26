@@ -6,6 +6,7 @@ var greenIcon = L.icon({
 
 //Create map
 var mymap = L.map('mapid').setView([39.5, -95], 4);
+
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 maxZoom: 18,
@@ -17,4 +18,4 @@ accessToken: 'pk.eyJ1IjoiaHVudGVyNTI4MCIsImEiOiJjazZ0cDF5dWUwMWk1M21wbm8wanUxcnB
 
 //Add Markers
 var marker = L.marker([39.9783, -105.275],{icon: greenIcon}).addTo(mymap);
-marker.bindPopup("<button type='button' onclick='window.location.href = &quot;data_visual.pl&quot;'>NCAR Boulder</button>")
+marker.bindPopup("<form action='data_visual.pl' method='post'><input type='submit' name='MapButton' value='NCAR Boulder' /></form>")
