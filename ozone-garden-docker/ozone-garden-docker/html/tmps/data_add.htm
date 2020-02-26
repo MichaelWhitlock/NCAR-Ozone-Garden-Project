@@ -10,11 +10,15 @@
     <!-- css -->
     [% INSERT '/var/www/html/styles/um/css/css-include.html' %]
 
+    <link href="../styles/um/css/data_add.css" rel="stylesheet">
+
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
         <script src="/styles/um/js/html5shiv.js"></script>
     <![endif]-->
 
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
     <!-- meta for social sharing images -->
     <meta property="og:title" content="Ozone Garden Observations">
@@ -151,7 +155,7 @@
                         </div>
 
                         <div class="row">
-                            <div id="carouselControls" class="carousel slide card" data-ride="carousel" data-interval="false">
+                            <div id="carouselExampleControls" class="carousel slide card col-md-4" data-ride="carousel" data-interval="false">
                               <div class="carousel-inner">
                                 <div class="carousel-item active">
                                   <img class="d-block w-100" src="/Images/croppedleaves/1.png" alt="First slide">
@@ -239,6 +243,28 @@
 <script type="text/javascript">
     $(window).on('load',function(){
         $('#ozone-modalLogin').modal('show');
+    });
+</script>
+
+<script>
+$(document).ready(function() {
+   $("#myCarousel").swiperight(function() {
+      $(this).carousel('prev');
+    });
+   $("#myCarousel").swipeleft(function() {
+      $(this).carousel('next');
+   });
+});
+</script>
+
+<script type="text/javascript">
+    console.log("testing testing");
+
+    var currentslide;
+
+    $('#carouselExampleControls').on('slide.bs.carousel', function(event) {
+        currentslide = event.from;
+        console.log("current active: " + currentslide);
     });
 </script>
 
@@ -340,7 +366,6 @@
         </div>
     </div>
 </div>
-
 
 
 </html>
