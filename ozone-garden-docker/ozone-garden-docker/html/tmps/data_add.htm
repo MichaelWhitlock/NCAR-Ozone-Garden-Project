@@ -72,7 +72,14 @@
             <div class="row">
                 <div class="col-lg-8">
 
+                    <a name="ws">
+                        <h3>Data Submission <small class="text-muted small">What is the severity of the ozone injury on the affected leaves?</small></h3>
+                    </a>
+
+                    <p class="">Choose a plant in the garden that has visible ozone injury. This will be the plant for which you collect data.</p>
+
                     <div id="mapid" style="width:100%;height:400px"></div>
+
                     <script type="text/javascript">
                             var greenIcon = L.icon({
                                 iconUrl: 'Images/green-leaf.png',
@@ -90,7 +97,6 @@
                         }).addTo(mymap);
                             var marker = L.marker([39.9783, -105.275],{icon: greenIcon}).addTo(mymap);
                             marker.bindPopup("<b>NCAR Boulder</b>")
-
                     </script>
                 </div>
 
@@ -121,12 +127,6 @@
                     [% msg_suc %]
                 </div>
             [% END %]
-
-
-            <a name="ws">
-                <h3>Data Submission <small class="text-muted small">What is the severity of the ozone injury on the affected leaves?</small></h3>
-            </a>
-            <p class="">Choose a plant in the garden that has visible ozone injury. This will be the plant for which you collect data.</p>
 
             <form method="post" action="#ws">
                 <div class="row py-3 bg-white rounded">
