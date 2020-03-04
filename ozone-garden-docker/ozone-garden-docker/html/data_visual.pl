@@ -14,6 +14,7 @@ use Text::CSV;
 use CGI::Carp qw( warningsToBrowser fatalsToBrowser );
 
 
+
 # time vars
 my $now = localtime;
 my $time_email = $now->strftime('%A, %B %d, %G at %I:%M%p'); 
@@ -36,7 +37,7 @@ my $tt = Template->new(\%tt_options);
 
 #Testing Sending javascript variables using templating - Hunter
 my $tt_vars = {
-                tester => "<script type='text/javascript'>var Coneflower = {
+                tester => "<script type='text/javascript'>var line2 = {
                                               x: [140, 157, 200, 220, 240],
                                               y: [16, 5,30, 40, 32],
                                               type: 'scatter',
