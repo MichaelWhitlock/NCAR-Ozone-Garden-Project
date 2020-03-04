@@ -11,7 +11,7 @@ use DBI;
 use Text::CSV;
 
 # uncomment line below to send debug messages to the browser, comment back when ready for production
-#use CGI::Carp qw( warningsToBrowser fatalsToBrowser );
+use CGI::Carp qw( warningsToBrowser fatalsToBrowser );
 
 
 # time vars
