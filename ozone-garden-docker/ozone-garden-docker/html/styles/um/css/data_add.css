@@ -20,6 +20,11 @@
 	margin-top:2%;
 }
 
+/* work around to prevent dropdown menu from displaying twice */
+span.form-control {
+	display:none;
+}
+
 @media only screen {
 	.carousel-mobile {
 		margin-top:1%;
