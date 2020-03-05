@@ -17,8 +17,7 @@
         <script src="/styles/um/js/html5shiv.js"></script>
     <![endif]-->
 
-    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
 
     <!-- meta for social sharing images -->
     <meta property="og:title" content="Ozone Garden Observations">
@@ -662,7 +661,7 @@
 
                         </div>
 
-                        <input type="submit" class="btn btn-primary btn-block" name="submit" style="margin-top:2%;margin-bottom:2%;"></input>
+                        <button type="submit" class="btn btn-primary btn-block" name="submit" style="margin-top:2%;margin-bottom:2%;">Submit</button>
 
                     </div>
                 </div>
@@ -682,26 +681,6 @@
 <!-- javascript include -->
 [% INSERT '/var/www/html/styles/um/js/js-include.html' %]
 </body>
-
-
-<!--
-<script type="text/javascript">
-    $(window).on('load',function(){
-        $('#ozone-modalLogin').modal('show');
-    });
-</script>
--->
-
-<script>
-$(document).ready(function() {
-   $("#carousel1").swiperight(function() {
-      $(this).carousel('prev');
-    });
-   $("#carousel1").swipeleft(function() {
-      $(this).carousel('next');
-   });
-});
-</script>
 
 <script type="text/javascript">
     $('#carousel1').on('slide.bs.carousel', function(event) {
