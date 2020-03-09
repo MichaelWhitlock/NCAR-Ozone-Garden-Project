@@ -47,6 +47,7 @@ my $tt_vars1;
 
 
 my $date_recorder = param('date-today');
+my $leaf1 = param('leaf1');
 
 #my $params = $cgi->Vars;
 #my $tt_vars->{'vars'}=$params
@@ -56,7 +57,7 @@ my $date_recorder = param('date-today');
 if ($cgi->param('submit')) {
 
     # dev message
-    $tt_vars->{'msg_err'} = $date_recorder;
+    $tt_vars->{'msg_err'} = $leaf1;
 }
 
 
