@@ -114,18 +114,7 @@
             </div>
 
 
-            [% IF msg_err != "" %] 
-                <div class="alert alert-danger center" role="alert">
-                    [% msg_err %]
-                </div>
-            [% END %]
-
-
-            [% IF msg_suc != "" %] 
-                <div class="alert alert-success center" role="alert">
-                    [% msg_suc %]
-                </div>
-            [% END %]
+            
 
             <form method="post" action="#ws">
 
@@ -661,7 +650,19 @@
 
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-block" name="submit" style="margin-top:2%;margin-bottom:2%;">Submit</button>
+                        <input type="submit" class="btn btn-primary btn-block" name="submit" value="Submit" style="margin-top:2%;margin-bottom:2%;"></input>
+                        [% IF msg_err != "" %] 
+                            <div class="alert alert-danger center" role="alert">
+                                [% msg_err %]
+                            </div>
+                        [% END %]
+
+
+                        [% IF msg_suc != "" %] 
+                            <div class="alert alert-success center" role="alert">
+                                [% msg_suc %]
+                            </div>
+                        [% END %]
 
                     </div>
                 </div>

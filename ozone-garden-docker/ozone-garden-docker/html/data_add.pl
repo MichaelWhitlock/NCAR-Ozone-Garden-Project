@@ -14,6 +14,15 @@ use Text::CSV;
 #use CGI::Carp qw( warningsToBrowser fatalsToBrowser );
 
 
+#Database connection
+#my $user = "admin";
+#my $auth = "greenteam";
+#my $dsn = "DBI:mysql:database=TannerTester;host=greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com;port=3306";
+#my $dbh = DBI->connect($dsn,$user,$auth);
+#my $sth = $dbh->prepare("SELECT * FROM Plants;");
+#eval {$dbh->do("DROP TABLE foo")};
+
+
 # time vars
 my $now = localtime;
 my $time_email = $now->strftime('%A, %B %d, %G at %I:%M%p'); 
@@ -32,6 +41,15 @@ my $cgi = CGI->new;
 my %tt_options = (INCLUDE_PATH => 'tmps', ABSOLUTE => 1, EVAL_PERL => 1);
 my $tt = Template->new(\%tt_options);
 my $tt_vars;
+my $tt_vars1;
+
+
+
+
+my $date_recorder = param('date-today');
+
+#my $params = $cgi->Vars;
+#my $tt_vars->{'vars'}=$params
 
 
 # checking for a form submission
@@ -48,6 +66,7 @@ my $tt_template = 'data_add.htm';
 # starting stuff
 $| = 1;
 print "Content-type: text/html\n\n";
+
 
 # process the template
 $tt->process($tt_template, $tt_vars) || die $tt->error();
