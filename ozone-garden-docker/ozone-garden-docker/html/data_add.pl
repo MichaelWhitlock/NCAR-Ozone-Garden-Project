@@ -56,7 +56,7 @@ my $date_recorder = param('date-today');
 if ($cgi->param('submit')) {
 
     # dev message
-    $tt_vars->{'msg_err'} = "Worksheet submitted";
+    $tt_vars->{'msg_err'} = $date_recorder;
 }
 
 
