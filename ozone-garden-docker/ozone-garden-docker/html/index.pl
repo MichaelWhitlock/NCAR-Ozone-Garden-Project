@@ -24,6 +24,17 @@ my $time_file = $now->strftime('%Y%m%d%H%M%S');
 # set the more vars
 my $email_ryanj = 'ryanj@ucar.edu';
 
+#database connection -Hunter
+my $data_source = "DBI:mysql:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:database=TannerTester";
+my $username = "admin";
+my $auth = "greenteam";
+
+my $dbh = DBI->connect($data_source, $username, $auth,
+          {RaiseError => 1} );
+my $sth = $dbh->prepare("SELECT location FROM Plants WHERE plantID=1;");
+$sth -> execute();
+
+
 
 # cgi vars
 my $cgi = CGI->new;
@@ -31,7 +42,9 @@ my $cgi = CGI->new;
 # tt vars
 my %tt_options = (INCLUDE_PATH => 'tmps', ABSOLUTE => 1, EVAL_PERL => 1);
 my $tt = Template->new(\%tt_options);
-my $tt_vars;
+my $tt_vars = {
+                test => $sth->fetchrow_array()
+            };
 
 
 # checking for a form submission
