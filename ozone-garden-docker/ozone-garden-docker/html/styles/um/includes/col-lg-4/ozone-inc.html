@@ -9,99 +9,6 @@
     </ul>
 </div>
 
-
-<!-- login modal -->
-<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="modalLoginLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalLoginLabel"><i class="fas fa-lock"></i> Login</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-                <form class="form-signin" method="POST" action="/login.pl">
-                    <img class="mb-1 img-fluid" src="/Images/logos/logo-ncar-600.png" alt="NCAR Logo">
-                    <p class="my-0 text-cesm mb-1 small">Please login using your credentials</p>
-
-
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input name="email" type="text" id="email" class="form-control" placeholder="..." required autofocus>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input name="password" type="password" id="password" class="form-control" placeholder="..." required>
-                    </div>
-
-                    <div class="btn-group mt-4 w-100" role="group">
-                        <input type="hidden" name="formUser" value="login">
-                        <button class="btn btn-primary" type="submit">Login</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<!-- register modal -->
-<div class="modal fade" id="modalRegister" tabindex="-1" role="dialog" aria-labelledby="modalRegisterLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalRegisterLabel"><i class="fas fa-lock-open"></i> Register</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-                <form class="form-signin" method="POST" action="register.pl">
-                    <img class="mb-1 img-fluid" src="/Images/logos/logo-ncar-600.png" alt="NCAR Logo">
-                    <p class="my-0 text-cesm mb-1 small">Please fill out the fields to create your account</p>
-
-                    <div class="form-group">
-                        <label class="mb-0" for="name">Name</label>
-                        <input name="name" type="text" id="name" class="form-control" placeholder="..." required autofocus>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="mb-0" for="email">Email</label>
-                        <input name="email" type="text" id="email" class="form-control" placeholder="..." required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="mb-0" for="institution">Institution <small class="text-muted">*Not required</small></label>
-                        <input name="institution" type="text" id="institution" class="form-control" placeholder="...">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="mb-0" for="password">Password</label>
-                        <input name="password" type="password" id="password" class="form-control" placeholder="..." required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="mb-0" for="password2">Verify Password</label>
-                        <input name="password2" type="password" id="password2" class="form-control" placeholder="..." required>
-                    </div>
-
-                    <div class="btn-group mt-4 w-100" role="group">
-                        <input type="hidden" name="formUser" value="register">
-                        <button class="btn btn-success" type="submit">Register</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- ozone login modal -->
 <div class="modal fade" id="ozone-modalLogin" tabindex="-1" role="dialog" aria-labelledby="ozone-modalLoginLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -121,12 +28,12 @@
 
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input name="email" type="text" id="email" class="form-control" placeholder="..." required autofocus>
+                        <input name="login_email" type="text" id="email" class="form-control" placeholder="..." required autofocus>
                     </div>
 
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input name="password" type="password" id="password" class="form-control" placeholder="..." required>
+                        <input name="login_password" type="password" id="password" class="form-control" placeholder="..." required>
                     </div>
 
                     <div class="btn-group mt-4 w-100" role="group">
@@ -160,27 +67,27 @@
 
                     <div class="form-group">
                         <label class="mb-0" for="name">Name</label>
-                        <input name="name" type="text" id="name" class="form-control" placeholder="..." required autofocus>
+                        <input name="register_name" type="text" id="name" class="form-control" placeholder="..." required autofocus>
                     </div>
 
                     <div class="form-group">
                         <label class="mb-0" for="email">Email</label>
-                        <input name="email" type="text" id="email" class="form-control" placeholder="..." required>
+                        <input name="register_email" type="text" id="email" class="form-control" placeholder="..." required>
                     </div>
 
                     <div class="form-group">
                         <label class="mb-0" for="institution">Institution <small class="text-muted">*Not required</small></label>
-                        <input name="institution" type="text" id="institution" class="form-control" placeholder="...">
+                        <input name="register_institution" type="text" id="institution" class="form-control" placeholder="...">
                     </div>
 
                     <div class="form-group">
                         <label class="mb-0" for="password">Password</label>
-                        <input name="password" type="password" id="password" class="form-control" placeholder="..." required>
+                        <input name="register_password" type="password" id="password" class="form-control" placeholder="..." required>
                     </div>
 
                     <div class="form-group">
                         <label class="mb-0" for="password2">Verify Password</label>
-                        <input name="password2" type="password" id="password2" class="form-control" placeholder="..." required>
+                        <input name="register_password2" type="password" id="password2" class="form-control" placeholder="..." required>
                     </div>
 
                     <div class="btn-group mt-4 w-100" role="group">

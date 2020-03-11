@@ -57,9 +57,9 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'register') {
 	my $password2;
 
 	# set them to return
-	$tt_vars->{'name'} = $cgi->param('name');
-	$tt_vars->{'email'} = $cgi->param('email');
-	$tt_vars->{'institution'} = $cgi->param('institution');
+	$tt_vars->{'name'} = $cgi->param('register_name');
+	$tt_vars->{'email'} = $cgi->param('register_email');
+	$tt_vars->{'institution'} = $cgi->param('register_institution');
 
 
 
