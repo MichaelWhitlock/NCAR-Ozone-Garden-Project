@@ -36,9 +36,24 @@ my $tt_vars;
 
 # checking for a form submission
 if ($cgi->param('submit')) {
+    # get form submission variables
+    my $leaf1 = $cgi->param('leaf1');
+    my $leaf2 = $cgi->param('leaf2');
+    my $leaf3 = $cgi->param('leaf3');
+    my $leaf4 = $cgi->param('leaf4');
+    my $leaf5 = $cgi->param('leaf5');
+    my $leaf6 = $cgi->param('leaf6');
+    my $leaf7 = $cgi->param('leaf7');
+    my $leaf8 = $cgi->param('leaf8');
+    my $leaf9 = $cgi->param('leaf9');
+    my $leaf10 = $cgi->param('leaf10');
+
+    my $date = $cgi->param('date-today');
+    my $location = $cgi->param('garden-location');
+    my $plant = $cgi->param('plant-type');
 
     # dev message
-    $tt_vars->{'msg_err'} = "Worksheet submitted";
+    $tt_vars->{'msg_err'} = "Worksheet Submitted";
 }
 
 
@@ -52,7 +67,6 @@ print "Content-type: text/html\n\n";
 # process the template
 $tt->process($tt_template, $tt_vars) || die $tt->error();
 exit;
-
 
 
 

@@ -55,7 +55,7 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'login') {
 	# TODO validate user
 	# push into the vars to return
 	$tt_vars->{'msg'} = "Login User";
-	$tt_vars->{'email'} = $cgi->param('email');
+	$tt_vars->{'email'} = $cgi->param('login_email');
 
 	&showForm();
 
