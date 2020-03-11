@@ -17,5 +17,5 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 }).addTo(mymap);
 
 //Add Markers
-var marker = L.marker([39.9783, -105.275],{icon: greenIcon}).addTo(mymap);
-marker.bindPopup("<form action='data_visual.pl' method='post'><input type='submit' name='MapButton' value='NCAR Boulder' /></form>")
+//var marker = L.marker([39.9783, -105.275],{icon: greenIcon}).addTo(mymap);
+//NCAR.bindPopup("<form action='data_visual.pl' method='post'><input type='submit' name='MapButton' value='NCAR Boulder' /></form>")

@@ -28,12 +28,20 @@ my $email_ryanj = 'ryanj@ucar.edu';
 my $data_source = "DBI:mysql:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:database=TannerTester";
 my $username = "admin";
 my $auth = "greenteam";
-
 my $dbh = DBI->connect($data_source, $username, $auth,
           {RaiseError => 1} );
-my $sth = $dbh->prepare("SELECT location FROM Plants WHERE plantID=1;");
+my $sth = $dbh->prepare("SELECT Latitude,Longitude,MarkerLabel,GardenName FROM GardenLocations");
 $sth -> execute();
 
+#using db info to create map markers with popups
+my $locations = "<script type='text/javascript'>";
+while (my @row = $sth->fetchrow_array()){
+    #add the map marker
+    $locations = $locations . "var " . $row[2] . " = L.marker([". $row[0] . ", " . $row[1] . "],{icon: greenIcon}).addTo(mymap);";
+    #add the popup for the marker
+    $locations = $locations . $row[2] . ".bindPopup(\"<form action='data_visual.pl' method='post'><input type='submit' name='MapButton' value='$row[3]' /></form>\");";
+}
+$locations = $locations . "</script>";
 
 
 # cgi vars
@@ -43,7 +51,7 @@ my $cgi = CGI->new;
 my %tt_options = (INCLUDE_PATH => 'tmps', ABSOLUTE => 1, EVAL_PERL => 1);
 my $tt = Template->new(\%tt_options);
 my $tt_vars = {
-                test => $sth->fetchrow_array()
+                mapMarkers => $locations
             };
 
 
