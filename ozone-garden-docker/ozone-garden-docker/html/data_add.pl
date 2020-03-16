@@ -75,6 +75,8 @@ my $char;
 
 #Database variables
 my $insertLineUserEntriesTable;
+my $insertIntoPLantTable;
+
 
 
 #my $params = $cgi->Vars;
@@ -119,8 +121,8 @@ if ($cgi->param('submit')) {
     $Leaf0sCounter = 10-$Leaf0sCounter + 1;
     
     #String that inserts all the data from the data_add page into our database
-    $insertLineUserEntriesTable = "INSERT INTO UserEntries(curDate, curYear, plantID, userID, daysSinceEmergence, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage)VALUES("."$date_current". ", "."$year_current". ", "."0".", ". "0".", ". "0".", ". "$Leaf0sCounter".", ". "$Leaf1sCounter".", ". "$Leaf2sCounter".", ". "$Leaf3sCounter".", ". "$Leaf4sCounter".", ". "$Leaf5sCounter".", ". "$Leaf6sCounter".");";
     
+    #INSERT INTO Plants(location, plantType, dateOfEmergence) VALUES ('ncar-front','snap-bean',CURDATE());
     #DB connection
     my $user = "admin";
     my $auth = "greenteam";
@@ -128,18 +130,48 @@ if ($cgi->param('submit')) {
     my $dbh = DBI->connect($dsn,$user,$auth);
 
 
-    #eval {$dbh->do($insertLineUserEntriesTable)};
+    
 
     #Statement that pulls/gives to the database
     my $sth = $dbh->prepare("SELECT count(plantID), plantID FROM Plants WHERE location = '$location' AND plantType = '$plantType';");
     $sth->execute();
     my @row = $sth->fetchrow_array();
         
-    my $plant = $row[0].$row[1].$row[2].$row[3];
+    my $plantCount = $row[0];
+    my $plantID;
+    #my $locationPlantType= $location . $plantType;#ncar-front snap-bean
+
+    #If statement if the select did not find a plant associated with the garden location
+    $plantID = $row[1];
+
+    if($plantCount == 0){
+        #Insert into the plant table a new one w/ plantType and location of entered data and current date_current(this assumes the first time it is entered is the date of emergence)
+        $insertIntoPLantTable = "INSERT INTO Plants(location, plantType, dateOfEmergence) VALUES ('$location','$plantType',CURDATE());";
+        #
+        eval {$dbh->do($insertIntoPLantTable)};
+        $sth = $dbh->prepare("SELECT plantID FROM Plants WHERE location = '$location' AND plantType = '$plantType';");
+        $sth->execute();
+        @row = $sth->fetchrow_array();
+        $plantID = $row[0];
+    }
+
+    #Get date difference from current date and dateOfEmergence
+    #SELECT DATEDIFF(CURDATE(),dateOfEmergence) FROM Plants WHERE plantID = 4;
+    $sth = $dbh->prepare("SELECT DATEDIFF(CURDATE(),dateOfEmergence) FROM Plants WHERE plantID = $plantID;");
+    $sth->execute();
+    @row = $sth->fetchrow_array();
+    my $dateDifference = $row[0];
+
+
+    #gets plantID
+    #SELECT (dateOfEmergence) FROM Plants WHERE plantID = 7;
+    $insertLineUserEntriesTable = "INSERT INTO UserEntries(curDate, curYear, plantID, userID, daysSinceEmergence, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage)VALUES("."CURDATE()". ", "."CURDATE()". ", "."$plantID".", ". "0".", ". "$dateDifference".", ". "$Leaf0sCounter".", ". "$Leaf1sCounter".", ". "$Leaf2sCounter".", ". "$Leaf3sCounter".", ". "$Leaf4sCounter".", ". "$Leaf5sCounter".", ". "$Leaf6sCounter".");";
+    
+    eval {$dbh->do($insertLineUserEntriesTable)};
     #INSERT INTO UserEntries(curDate, curYear, plantID, userID, daysSinceEmergence, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage)
     
     #Output variable of the submit button
-    $tt_vars->{'msg_err'} = $plant;
+    $tt_vars->{'msg_err'} = $insertLineUserEntriesTable;
 }
 
 
