@@ -14,28 +14,29 @@ y: [10, 30, 70, 60],
 //  name: '2019'
 //};
 var data = [line1, line2];
-var layout = {title: 'NCAR Mesa Lab: Coneflower',
-            xaxis: {
-                  title: 'Day Of Year',
-                  titlefont: {
-                  family: 'Arial, sans-serif',
-                  size: 18,
-                  color: 'grey'
-                },},
-             yaxis: {
-                  title: 'Proportion Of Injured Leaves',
-                  titlefont: {
-                  family: 'Arial, sans-serif',
-                  size: 18,
-                  color: 'grey'
-                },} };
+
+// var layout = {title: 'NCAR Mesa Lab: Coneflower',
+//             xaxis: {
+//                   title: 'Day Of Year',
+//                   titlefont: {
+//                   family: 'Arial, sans-serif',
+//                   size: 18,
+//                   color: 'grey'
+//                 },},
+//              yaxis: {
+//                   title: 'Proportion Of Injured Leaves',
+//                   titlefont: {
+//                   family: 'Arial, sans-serif',
+//                   size: 18,
+//                   color: 'grey'
+//                 },} };
 
 //bar chart code
 
 var line3 = {
   x: ['150', '156', '163', '174', '177', '182', '190', '196', '217', '225'],
   y: [20, 14, 23, 30, 23, 34, 45, 32, 12, 13],
-  name: 'SF Zoo',
+  name: 'test',
   type: 'bar'
 };
 var line4 = {
