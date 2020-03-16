@@ -11,7 +11,7 @@ use DBI;
 use Text::CSV;
 
 # uncomment line below to send debug messages to the browser, comment back when ready for production
-#use CGI::Carp qw( warningsToBrowser fatalsToBrowser );
+use CGI::Carp qw( warningsToBrowser fatalsToBrowser );
 
 
 #Database connection
@@ -25,9 +25,10 @@ use Text::CSV;
 
 # time vars
 my $now = localtime;
-my $time_email = $now->strftime('%A, %B %d, %G at %I:%M%p'); 
-my $date_current = $now->strftime('%Y.%m.%d'); 
-my $time_current = $now->strftime('%R'); 
+my $time_email = $now->strftime('%A, %B %d, %G at %I:%M%p');
+my $date_current = $now->strftime('%Y-%m-%d');
+my $year_current = $now->strftime('%Y');
+my $time_current = $now->strftime('%R');
 my $time_file = $now->strftime('%Y%m%d%H%M%S');
 
 # set the more vars
@@ -44,20 +45,101 @@ my $tt_vars;
 my $tt_vars1;
 
 
+#variables for form
+my @leaves;
+my @leaves = ('leaf1','leaf2','leaf3','leaf4','leaf5','leaf6','leaf7','leaf8','leaf9','leaf10');
 
 
+
+#Holders for the for look inside the submit button
+my $counter = 0;
+my $holder;
+
+#Case counters
+my $Leaf0sCounter = 0;
+my $Leaf1sCounter = 0;
+my $Leaf2sCounter = 0;
+my $Leaf3sCounter = 0;
+my $Leaf4sCounter = 0;
+my $Leaf5sCounter = 0;
+my $Leaf6sCounter = 0;
+
+#Form variables being pulled
 my $date_recorder = param('date-today');
 my $leaf1 = param('leaf1');
+my $location = param('garden-location');
+my $plantType = param('plant-type');
+
+#variable for substring
+my $char;
+
+#Database variables
+my $insertLineUserEntriesTable;
+
 
 #my $params = $cgi->Vars;
 #my $tt_vars->{'vars'}=$params
 
 
+
 # checking for a form submission
 if ($cgi->param('submit')) {
+#For each leaf that is in the carasal it grabs the variable with it and merges it into a string
+    foreach my $curLeaf (@leaves){
+        $holder = param($curLeaf);
+        $counter = "$counter"."$holder";
+    }
+    
+    #For each char in the string just get it right now
+    for my $i (0..length($counter)-1){
+        $char = substr($counter, $i, 1);
 
-    # dev message
-    $tt_vars->{'msg_err'} = $leaf1;
+        #cascading cases of the carasal 
+        #0=no data, 1 = 0% damage, 2 = 1_6% damage, 3 = 7-25
+        #4 = 25-50, 5 = 51-75, 6 = 76-100
+        if($char == 0){
+            $Leaf0sCounter = $Leaf0sCounter + 1;
+        }elsif($char == 1){
+            $Leaf1sCounter = $Leaf1sCounter + 1;
+        }elsif($char == 2){
+            $Leaf2sCounter = $Leaf2sCounter + 1;
+        }elsif($char == 3){
+            $Leaf3sCounter = $Leaf3sCounter + 1;
+        }elsif($char == 4){
+            $Leaf4sCounter = $Leaf4sCounter + 1;
+        }elsif($char == 5){
+            $Leaf5sCounter = $Leaf5sCounter + 1;
+        }elsif($char == 6){
+            $Leaf6sCounter = $Leaf6sCounter + 1;
+        }
+
+    }
+
+    #$selectData = "0 Cases:"."$Leaf0sCounter"." 1 Cases:"."$Leaf1sCounter"." 2 Cases:"."$Leaf2sCounter"." 3 Cases:"."$Leaf3sCounter"." 4 Cases:"."$Leaf4sCounter"." 5 Cases:"."$Leaf5sCounter"." 6 Cases:"."$Leaf6sCounter";
+    $Leaf0sCounter = 10-$Leaf0sCounter + 1;
+    
+    #String that inserts all the data from the data_add page into our database
+    $insertLineUserEntriesTable = "INSERT INTO UserEntries(curDate, curYear, plantID, userID, daysSinceEmergence, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage)VALUES("."$date_current". ", "."$year_current". ", "."0".", ". "0".", ". "0".", ". "$Leaf0sCounter".", ". "$Leaf1sCounter".", ". "$Leaf2sCounter".", ". "$Leaf3sCounter".", ". "$Leaf4sCounter".", ". "$Leaf5sCounter".", ". "$Leaf6sCounter".");";
+    
+    #DB connection
+    my $user = "admin";
+    my $auth = "greenteam";
+    my $dsn = "DBI:mysql:database=TannerTester;host=greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com;port=3306";
+    my $dbh = DBI->connect($dsn,$user,$auth);
+
+
+    #eval {$dbh->do($insertLineUserEntriesTable)};
+
+    #Statement that pulls/gives to the database
+    my $sth = $dbh->prepare("SELECT count(plantID), plantID FROM Plants WHERE location = '$location' AND plantType = '$plantType';");
+    $sth->execute();
+    my @row = $sth->fetchrow_array();
+        
+    my $plant = $row[0].$row[1].$row[2].$row[3];
+    #INSERT INTO UserEntries(curDate, curYear, plantID, userID, daysSinceEmergence, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage)
+    
+    #Output variable of the submit button
+    $tt_vars->{'msg_err'} = $plant;
 }
 
 
