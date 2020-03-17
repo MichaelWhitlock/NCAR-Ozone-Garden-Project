@@ -78,12 +78,6 @@ my $insertLineUserEntriesTable;
 my $insertIntoPLantTable;
 
 
-
-#my $params = $cgi->Vars;
-#my $tt_vars->{'vars'}=$params
-
-
-
 # checking for a form submission
 if ($cgi->param('submit')) {
 #For each leaf that is in the carasal it grabs the variable with it and merges it into a string
@@ -117,7 +111,7 @@ if ($cgi->param('submit')) {
 
     }
 
-    #$selectData = "0 Cases:"."$Leaf0sCounter"." 1 Cases:"."$Leaf1sCounter"." 2 Cases:"."$Leaf2sCounter"." 3 Cases:"."$Leaf3sCounter"." 4 Cases:"."$Leaf4sCounter"." 5 Cases:"."$Leaf5sCounter"." 6 Cases:"."$Leaf6sCounter";
+    #Gets the amount of leaves used
     $Leaf0sCounter = 10-$Leaf0sCounter + 1;
     
 
@@ -160,7 +154,7 @@ if ($cgi->param('submit')) {
     @row = $sth->fetchrow_array();
     my $dateDifference = $row[0];
 
-
+    
     $insertLineUserEntriesTable = "INSERT INTO UserEntries(curDate, curYear, plantID, userID, daysSinceEmergence, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage)VALUES("."CURDATE()". ", "."CURDATE()". ", "."$plantID".", ". "0".", ". "$dateDifference".", ". "$Leaf0sCounter".", ". "$Leaf1sCounter".", ". "$Leaf2sCounter".", ". "$Leaf3sCounter".", ". "$Leaf4sCounter".", ". "$Leaf5sCounter".", ". "$Leaf6sCounter".");";
 
     eval {$dbh->do($insertLineUserEntriesTable)};
