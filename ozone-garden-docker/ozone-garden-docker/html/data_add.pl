@@ -34,6 +34,25 @@ my $time_file = $now->strftime('%Y%m%d%H%M%S');
 # set the more vars
 my $email_ryanj = 'ryanj@ucar.edu';
 
+#Database connection for map markers -Hunter
+my $data_source = "DBI:mysql:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:database=TannerTester";
+my $username = "admin";
+my $auth = "greenteam";
+my $dbh = DBI->connect($data_source, $username, $auth,
+          {RaiseError => 1} );
+my $sth = $dbh->prepare("SELECT Latitude,Longitude,MarkerLabel,GardenName FROM GardenLocations");
+$sth -> execute();
+
+#using db info to create map markers with popups
+my $locations = "<script type='text/javascript'>";
+while (my @row = $sth->fetchrow_array()){
+    #add the map marker
+    $locations = $locations . "var " . $row[2] . " = L.marker([". $row[0] . ", " . $row[1] . "],{icon: greenIcon}).addTo(mymap);";
+    #add the popup for the marker
+    $locations = $locations . $row[2] . ".bindPopup(\"<form action='' method='post'><input type='submit' name='MapButton' value='$row[3]' /></form>\");";
+}
+$locations = $locations . "</script>";
+
 
 # cgi vars
 my $cgi = CGI->new;
@@ -41,6 +60,7 @@ my $cgi = CGI->new;
 # tt vars
 my %tt_options = (INCLUDE_PATH => 'tmps', ABSOLUTE => 1, EVAL_PERL => 1);
 my $tt = Template->new(\%tt_options);
+
 my $tt_vars;
 my $tt_vars1;
 
@@ -76,6 +96,9 @@ my $char;
 #Database variables
 my $insertLineUserEntriesTable;
 my $insertIntoPLantTable;
+my $tt_vars = {
+        mapMarkers => $locations
+};
 
 
 # checking for a form submission
@@ -161,6 +184,24 @@ if ($cgi->param('submit')) {
     
     #Output variable of the submit button
     $tt_vars->{'msg_err'} = "Data Submitted!";
+    # get form submission variables
+    my $leaf1 = $cgi->param('leaf1');
+    my $leaf2 = $cgi->param('leaf2');
+    my $leaf3 = $cgi->param('leaf3');
+    my $leaf4 = $cgi->param('leaf4');
+    my $leaf5 = $cgi->param('leaf5');
+    my $leaf6 = $cgi->param('leaf6');
+    my $leaf7 = $cgi->param('leaf7');
+    my $leaf8 = $cgi->param('leaf8');
+    my $leaf9 = $cgi->param('leaf9');
+    my $leaf10 = $cgi->param('leaf10');
+
+    my $date = $cgi->param('date-today');
+    my $location = $cgi->param('garden-location');
+    my $plant = $cgi->param('plant-type');
+
+    # dev message
+    $tt_vars->{'msg_err'} = "Worksheet Submitted";
 }
 
 
@@ -175,7 +216,6 @@ print "Content-type: text/html\n\n";
 # process the template
 $tt->process($tt_template, $tt_vars) || die $tt->error();
 exit;
-
 
 
 

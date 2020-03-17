@@ -28,6 +28,23 @@ my $email_ryanj = 'ryanj@ucar.edu';
 
 # cgi vars
 my $cgi = CGI->new;
+my $selectedLoc = $cgi->param('MapButton');
+
+#database connection -Hunter
+my $data_source = "DBI:mysql:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:database=TannerTester";
+my $username = "admin";
+my $auth = "greenteam";
+my $dbh = DBI->connect($data_source, $username, $auth,
+          {RaiseError => 1} );
+my $sqlString = "SELECT Latitude,Longitude,MarkerLabel,GardenName FROM GardenLocations WHERE GardenName = \"" . $selectedLoc . "\"";
+my $sth = $dbh->prepare($sqlString);
+$sth -> execute();
+my $temp = "";
+
+#using db info to create map markers with popups
+while (my @row = $sth->fetchrow_array()){
+    $temp = $row[3];
+}
 
 
 
@@ -42,8 +59,26 @@ my $tt_vars = {
                                               y: [16, 5,30, 40, 32],
                                               type: 'scatter',
                                               name: '2019'
-                                            };</script>",
-                tester2 => $cgi->param('MapButton'),
+                                            };
+                                            var layout = {title: '$temp : Coneflower' ,
+                                            xaxis: {
+                                                  title: 'Day Of Year',
+                                                  titlefont: {
+                                                  family: 'Arial, sans-serif',
+                                                  size: 18,
+                                                  color: 'grey'
+                                                },},
+                                             yaxis: {
+                                                  title: 'Proportion Of Injured Leaves',
+                                                  titlefont: {
+                                                  family: 'Arial, sans-serif',
+                                                  size: 18,
+                                                  color: 'grey'
+                                                },} };
+
+
+                                            </script>",
+                tester2 => "",
 
             };
 

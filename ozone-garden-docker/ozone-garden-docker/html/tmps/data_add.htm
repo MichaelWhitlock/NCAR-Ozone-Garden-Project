@@ -27,7 +27,6 @@
     <meta property="og:image" content="https://www.cgd.ucar.edu/Images/ws2-1.png">
 
     <!-- Testing Plot.ly and Map-->
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
    crossorigin=""/>
@@ -78,25 +77,6 @@
                     <p class="">Start your data collection by selecting you garden selection from below.</p>
 
                     <div id="mapid" style="width:100%;height:400px"></div>
-
-                    <script type="text/javascript">
-                            var greenIcon = L.icon({
-                                iconUrl: 'Images/green-leaf.png',
-                                iconSize: [38,45],
-
-                            })
-                            var mymap = L.map('mapid').setView([39.5, -95], 4);
-                            L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-                            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                            maxZoom: 18,
-                            id: 'mapbox/streets-v11',
-                            tileSize: 512,
-                            zoomOffset: -1,
-                            accessToken: 'pk.eyJ1IjoiaHVudGVyNTI4MCIsImEiOiJjazZ0cDF5dWUwMWk1M21wbm8wanUxcnBnIn0.Kx78AVroooRQnU_oQlJ8qg'
-                        }).addTo(mymap);
-                            var marker = L.marker([39.9783, -105.275],{icon: greenIcon}).addTo(mymap);
-                            marker.bindPopup("<b>NCAR Boulder</b>")
-                    </script>
                 </div>
 
                 <!-- SIDEBAR (for demo only) messes with form submission -->
@@ -647,7 +627,6 @@
                             </div>
 
                         </div>
-
                         <input type="submit" class="btn btn-primary btn-block" name="submit" value="Submit" style="margin-top:2%;margin-bottom:2%;"></input>
                         [% IF msg_err != "" %] 
                             <div class="alert alert-danger center" role="alert">
@@ -679,11 +658,13 @@
 
 <!-- javascript include -->
 [% INSERT '/var/www/html/styles/um/js/js-include.html' %]
+<script type='text/javascript' language='javascript' src="styles/um/js/map.js"></script>
+[% mapMarkers %]
 </body>
 
 <script type="text/javascript">
     $('#carousel1').on('slide.bs.carousel', function(event) {
-        var currentSlide = event.from+1;
+        var currentSlide = event.to;
         // console.log("current active: " + currentSlide);
 
         switch(currentSlide) {
@@ -711,7 +692,7 @@
     });
 
     $('#carousel2').on('slide.bs.carousel', function(event) {
-        var currentSlide = event.from+1;
+        var currentSlide = event.to;
         // console.log("current active: " + currentSlide);
 
         switch(currentSlide) {
@@ -739,7 +720,7 @@
     });
 
     $('#carousel3').on('slide.bs.carousel', function(event) {
-        var currentSlide = event.from+1;
+        var currentSlide = event.to;
         // console.log("current active: " + currentSlide);
 
         switch(currentSlide) {
@@ -767,7 +748,7 @@
     });
 
     $('#carousel4').on('slide.bs.carousel', function(event) {
-        var currentSlide = event.from+1;
+        var currentSlide = event.to;
         // console.log("current active: " + currentSlide);
 
         switch(currentSlide) {
@@ -795,7 +776,7 @@
     });
 
     $('#carousel5').on('slide.bs.carousel', function(event) {
-        var currentSlide = event.from+1;
+        var currentSlide = event.to;
         // console.log("current active: " + currentSlide);
 
         switch(currentSlide) {
@@ -823,7 +804,7 @@
     });
 
     $('#carousel6').on('slide.bs.carousel', function(event) {
-        var currentSlide = event.from+1;
+        var currentSlide = event.to;
         // console.log("current active: " + currentSlide);
 
         switch(currentSlide) {
@@ -851,7 +832,7 @@
     });
 
     $('#carousel7').on('slide.bs.carousel', function(event) {
-        var currentSlide = event.from+1;
+        var currentSlide = event.to;
         // console.log("current active: " + currentSlide);
 
         switch(currentSlide) {
@@ -879,7 +860,7 @@
     });
 
     $('#carousel8').on('slide.bs.carousel', function(event) {
-        var currentSlide = event.from+1;
+        var currentSlide = event.to;
         // console.log("current active: " + currentSlide);
 
         switch(currentSlide) {
@@ -907,7 +888,7 @@
     });
 
     $('#carousel9').on('slide.bs.carousel', function(event) {
-        var currentSlide = event.from+1;
+        var currentSlide = event.to;
         // console.log("current active: " + currentSlide);
 
         switch(currentSlide) {
@@ -935,7 +916,7 @@
     });
 
     $('#carousel10').on('slide.bs.carousel', function(event) {
-        var currentSlide = event.from+1;
+        var currentSlide = event.to;
         // console.log("current active: " + currentSlide);
 
         switch(currentSlide) {
