@@ -325,30 +325,28 @@
 
             </div> 
 
-
-
-            <div class= "container">
-
+            <div id="quiz" class= "container">
                 <div class="row">
-                    <div class="col-lg-1"></div>
+                    <div class="col-lg-6">
                     <div class = "bg-light text-center p-4 border rounded">
                         <h5>Is This Ozone Damage?</h5>
                         <br>
-                        <img src="/Images/testPic.png" alt="A test image pay no mind" class="img-fluid">
+                        <img id="displayed_leaf" src="/Images/noinjury/1.jpg" alt="A test image pay no mind" class="img-fluid">
                         <br>
                         <br>
                         <div class="row">
                             <div class="col-lg-6">
-                                <button type="button" class="btn btn-primary btn-block" name="yes" onclick="alert('You have clicked this...')">YES</button>
+                                <button id="yes" type="button" class="btn btn-primary btn-block" name="yes">YES</button>
                             </div>
                             <div class="col-lg-6">
-                                <button type="button" class="btn btn-primary btn-block" name="no" onclick="alert('You have clicked this...')">NO </button>
+                                <button id="no" type="button" class="btn btn-primary btn-block" name="no">NO </button>
                             </div>
+                            <button id="next_question" type="button" class="btn btn-primary btn-block">Next Question</button>
                         </div>
+                    </div>
                     </div>
                     <div class="col-lg-3"></div>
                 </div>
-
             </div>  
 
         </div>
@@ -374,6 +372,17 @@
 [% INSERT '/var/www/html/styles/um/js/js-include.html' %]
 
 </body>
+
+
+<!-- react import -->
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script src="/styles/um/js/training.js" type="text/babel">
+
+
+</script>
 
 </html>
 
