@@ -30,6 +30,9 @@ my $email_ryanj = 'ryanj@ucar.edu';
 my $cgi = CGI->new;
 my $selectedLoc = $cgi->param('MapButton');
 
+#code to create single graph
+
+
 #database connection -Hunter
 my $data_source = "DBI:mysql:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:database=TannerTester";
 my $username = "admin";
@@ -39,7 +42,7 @@ my $dbh = DBI->connect($data_source, $username, $auth,
 my $sqlString = "SELECT Latitude,Longitude,MarkerLabel,GardenName FROM GardenLocations WHERE GardenName = \"" . $selectedLoc . "\"";
 my $sth = $dbh->prepare($sqlString);
 $sth -> execute();
-my $temp = "";
+my $temp = "NCAR";
 
 #using db info to create map markers with popups
 while (my @row = $sth->fetchrow_array()){
@@ -78,7 +81,8 @@ my $tt_vars = {
 
 
                                             </script>",
-                tester2 => "",
+                keepLoc => '<input type="hidden" name="MapButton" value= " ' . $cgi->param('MapButton') . '"/>',
+                tester2 => $cgi->param('MapButton'),
 
             };
 

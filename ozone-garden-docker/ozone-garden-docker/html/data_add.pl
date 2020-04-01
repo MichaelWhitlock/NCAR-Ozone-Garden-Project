@@ -45,11 +45,16 @@ $sth -> execute();
 
 #using db info to create map markers with popups
 my $locations = "<script type='text/javascript'>";
+my $locationsSelect = ".";
 while (my @row = $sth->fetchrow_array()){
     #add the map marker
     $locations = $locations . "var " . $row[2] . " = L.marker([". $row[0] . ", " . $row[1] . "],{icon: greenIcon}).addTo(mymap);";
+    #add name variable so we can pass it to our selectLocation function when button is clicked
+    $locations = $locations . "var $row[2]" . "nameVar = \'$row[2]\';"; 
     #add the popup for the marker
-    $locations = $locations . $row[2] . ".bindPopup(\"<form action='' method='post'><input type='submit' name='MapButton' value='$row[3]' /></form>\");";
+    $locations = $locations . $row[2] . ".bindPopup(\"<form onSubmit=\'selectLocation($row[2]" . "nameVar" . "); return false\';><input type='submit' name='MapButton' value='$row[3]' /></form>\");";
+    #set options for garden location select to be the same as map markers
+    $locationsSelect = $locationsSelect . "<option value=\"" . $row[2] . "\">" . $row[3] . "</option>";
 }
 $locations = $locations . "</script>";
 
@@ -97,7 +102,8 @@ my $char;
 my $insertLineUserEntriesTable;
 my $insertIntoPLantTable;
 my $tt_vars = {
-        mapMarkers => $locations
+        mapMarkers => $locations,
+        locationsSelect => $locationsSelect,
 };
 
 
