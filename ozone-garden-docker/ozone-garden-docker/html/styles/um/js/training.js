@@ -20,7 +20,21 @@ function getFilePath() {
     return filepath;
 }
 
-const e = React.createElement;
+class checkAnswer extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            correct: true,
+        };
+    }
+
+    render () {
+
+    }
+}
+
+const next = React.createElement;
 
 class NextQuestion extends React.Component {
 
@@ -35,7 +49,7 @@ class NextQuestion extends React.Component {
     render() {
         document.getElementById("displayed_leaf").src = this.state.file;
 
-        return e(
+        return next(
             "button",
             { onClick: () => this.setState({ file: getFilePath() }) },
             "Next Question"
@@ -44,4 +58,4 @@ class NextQuestion extends React.Component {
 }
 
 const domContainer = document.getElementById("next_question");
-ReactDOM.render(e(NextQuestion), domContainer);
+ReactDOM.render(next(NextQuestion), domContainer);
