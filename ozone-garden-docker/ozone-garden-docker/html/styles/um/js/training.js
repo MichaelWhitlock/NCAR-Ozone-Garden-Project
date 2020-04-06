@@ -1,5 +1,12 @@
 'use strict';
 
+const answerBank = {
+    "ozone": "This is ozone damage!",
+    "noinjury": "There is no injury on the plant.",
+    "other": "This is not ozone damage.", 
+
+}
+
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
@@ -32,7 +39,7 @@ class Quiz extends React.Component {
         super(props);
 
         this.state = {
-            correct: -1,
+            response: "",
             file: "/Images/ozone/1.jpg",
             type: "ozone",
         };
@@ -41,7 +48,7 @@ class Quiz extends React.Component {
     nextQuestion = () => {
         const question = getFilePath();
         this.setState({
-            correct: -1,
+            response: "",
             file: question[0],
             type: question[1],
         });
@@ -50,31 +57,57 @@ class Quiz extends React.Component {
     checkYes = () => {
         if(this.state.type == "ozone") { // correct
             this.setState({
-                correct: 1;
+                response: (
+                    <div className="correct">
+                        <strong>Correct!</strong>
+                    </div>
+                ),
             });
         }
         else { // incorrect
             this.setState({
-                correct: 0;
+                response: (
+                    <div className="incorrect">
+                        <strong>Incorrect!</strong>
+                    </div>
+                ),
             });
         }
     }
 
     checkNo = () => {
-        if(this.state.type == "noinjury" || this.state.type == "other") { // correct
+        if(this.state.type == "noinjury") { // correct
             this.setState({
-                correct: 1;
+                response: (
+                    <div className="correct">
+                        <strong>Correct!</strong>
+                    </div>
+                ),
+            });
+        }
+        if(this.state.type == "other") { // correct
+            this.setState({
+                response: (
+                    <div className="correct">
+                        <strong>Correct!</strong>
+                    </div>
+                ),
             });
         }
         else { // incorrect
             this.setState({
-                correct: 0;
+                response: (
+                    <div className="incorrect">
+                        <strong>Incorrect!</strong>
+                    </div>
+                ),
             });
         }
     }
 
     render() {
         return(
+
             <div className="row">
                 <div className="col-lg-6">
                     <div className = "bg-light text-center p-4 border rounded">
@@ -84,6 +117,9 @@ class Quiz extends React.Component {
                         <br />
                         <br />
                         <div className="row">
+
+                            {this.state.response}
+
                             <div className="col-lg-6">
                                 <button id="yes" type="button" className="btn btn-primary btn-block" name="yes" onClick={this.checkYes}>YES</button>
                             </div>
@@ -102,47 +138,3 @@ class Quiz extends React.Component {
 }
 
 ReactDOM.render(<Quiz />, document.getElementById("quiz"));
-
-
-/*
-class CheckAnswer extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            correct: true,
-        };
-    }
-
-    render () {
-
-    }
-}
-
-const next = React.createElement;
-
-class NextQuestion extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = { 
-            file: "/Images/ozone/1.jpg",
-        };
-    }
-
-    render() {
-        document.getElementById("displayed_leaf").src = this.state.file;
-
-        return next(
-            "button",
-            { onClick: () => this.setState({ file: getFilePath() }) },
-            "Next Question"
-        );
-    }
-}
-
-const domContainer = document.getElementById("next_question");
-ReactDOM.render(next(NextQuestion), domContainer);
-
-*/
