@@ -80,8 +80,7 @@
                                     <label for="plant-type">Plant Type</label>
                                     <select id="plant-type" name="plant-type" class="form-control">
                                         <option id="select-plant-type" selected value="select-plant-type">Plant Type</option>
-                                        <option id="coneflower" value="coneflower">Coneflower</option>
-                                        <option id="snap-bean" value="snap-bean">Snap Bean</option>
+                                        [% fillPlants %]
                                     </select>
                             </div>
 
@@ -89,8 +88,7 @@
                                     <label for="year-select">Year</label>
                                     <select id="year-select" name="year-select" class="form-control" onchange="this.form.submit()">
                                         <option selected value="select-year">Year</option>
-                                        <option id="2018" value="2018">2018</option>
-                                        <option id="2019" value="2019">2019</option>
+                                        [% fillDate %]
                                     </select>
                             </div>
 
@@ -107,9 +105,13 @@
                         <div ID = "tester3"></div>
                         <div ID = "tester"></div>
                         
+                        [% barTitle %]
+
                         [% tester %]
                         
                         [% tester2 %]
+
+                        [% barVariables %]
                         <br>
 
                         <p>For more comments or questions contact Danica Lombardozzi [ <a href="dll@ucar.edu">dll@ucar.edu</a> ]</p>

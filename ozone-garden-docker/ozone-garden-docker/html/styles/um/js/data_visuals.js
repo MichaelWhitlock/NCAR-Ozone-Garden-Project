@@ -57,45 +57,13 @@ TESTER2 = document.getElementById('tester3');
 //                   color: 'grey'
 //                 },} };
 
-//bar chart code
-
-var line3 = {
-  x: ['150', '156', '163', '174', '177', '182', '190', '196', '217', '225'],
-  y: [20, 14, 23, 30, 23, 34, 45, 32, 12, 13],
-  name: 'test',
-  type: 'bar'
-};
-var line4 = {
-  x: ['150', '156', '163', '174', '177', '182', '190', '196', '217', '225'],
-  y: [20, 14, 23, 12, 34, 15, 14, 23, 45, 50],
-  name: 'SF Zoo',
-  type: 'bar'
-};
-
-var layout2 = {barmode: 'stack', title: 'NCAR Mesa Lab: Coneflower',
-            xaxis: {
-                  title: 'Day Of Year',
-                  titlefont: {
-                  family: 'Arial, sans-serif',
-                  size: 18,
-                  color: 'grey'
-                },},
-             yaxis: {
-                  title: 'Proportion Of Injured Leaves',
-                  titlefont: {
-                  family: 'Arial, sans-serif',
-                  size: 18,
-                  color: 'grey'
-                },
-                }};
-
-var data2 = [line3,line4];
+var dataBar = [line0,line1,line2,line3,line4,line5];
 
 
 
 
 
 //Plotly.newPlot('tester', data, layout, {displayModeBar: false});
-Plotly.newPlot('tester3', data2, layout2, {displayModeBar: false});
+Plotly.newPlot('tester3', dataBar, layoutBar, {displayModeBar: false});
 
 
