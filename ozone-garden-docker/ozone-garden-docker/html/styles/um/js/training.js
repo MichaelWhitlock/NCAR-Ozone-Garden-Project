@@ -41,10 +41,36 @@ class Quiz extends React.Component {
     nextQuestion = () => {
         const question = getFilePath();
         this.setState({
+            correct: -1,
             file: question[0],
             type: question[1],
-            correct: -1,
         });
+    }
+
+    checkYes = () => {
+        if(this.state.type == "ozone") { // correct
+            this.setState({
+                correct: 1;
+            });
+        }
+        else { // incorrect
+            this.setState({
+                correct: 0;
+            });
+        }
+    }
+
+    checkNo = () => {
+        if(this.state.type == "noinjury" || this.state.type == "other") { // correct
+            this.setState({
+                correct: 1;
+            });
+        }
+        else { // incorrect
+            this.setState({
+                correct: 0;
+            });
+        }
     }
 
     render() {
@@ -59,10 +85,10 @@ class Quiz extends React.Component {
                         <br />
                         <div className="row">
                             <div className="col-lg-6">
-                                <button id="yes" type="button" className="btn btn-primary btn-block" name="yes">YES</button>
+                                <button id="yes" type="button" className="btn btn-primary btn-block" name="yes" onClick={this.checkYes}>YES</button>
                             </div>
                             <div className="col-lg-6">
-                                <button id="no" type="button" className="btn btn-primary btn-block" name="no">NO </button>
+                                <button id="no" type="button" className="btn btn-primary btn-block" name="no" onClick={this.checkNo}>NO</button>
                             </div>
                             <button id="next_question" type="button" className="btn btn-primary btn-block" onClick={this.nextQuestion}>Next Question</button>
                         </div>
