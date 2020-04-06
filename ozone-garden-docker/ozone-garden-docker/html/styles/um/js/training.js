@@ -10,15 +10,15 @@ function getFilePath() {
 
     const type = getRandomInt(3); 
     if(type == 0) { // no injury
-        filepath = "/Images/".concat("noinjury/", getRandomInt(2), ".jpg");
+        filepath = "/Images/".concat("noinjury/leaf", getRandomInt(9), ".jpg");
         plantType = "noinjury";
     }
     if(type == 1) { // ozone
-        filepath = "/Images/".concat("ozone/", getRandomInt(3), ".jpg");
+        filepath = "/Images/".concat("ozone/leaf", getRandomInt(33), ".jpg");
         plantType = "ozone";
     }
     if(type == 2) { // other dmg
-        filepath = "/Images/".concat("other/", getRandomInt(3), ".jpg");
+        filepath = "/Images/".concat("other/leaf", getRandomInt(26), ".jpg");
         plantType = "other";
     }  
 
