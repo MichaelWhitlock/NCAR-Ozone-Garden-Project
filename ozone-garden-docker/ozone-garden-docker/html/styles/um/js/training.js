@@ -129,7 +129,7 @@ class Quiz extends React.Component {
 
                             <br />
 
-                            <div className="col-lg-12">
+                            <div className="col-lg-12 nextButton">
                                 <button id="next_question" type="button" className="btn btn-primary btn-block" onClick={this.nextQuestion}>Next Question</button>
                             </div>
                         </div>
