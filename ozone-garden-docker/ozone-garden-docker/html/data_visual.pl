@@ -53,9 +53,33 @@ my $username = "admin";
 my $auth = "greenteam";
 my $dbh = DBI->connect($data_source, $username, $auth,
           {RaiseError => 1} );
+
+#This code is stolen from main page map, it uses info from database to fill in garden location markers for the map
+my $sth = $dbh->prepare("SELECT Latitude,Longitude,MarkerLabel,GardenName FROM GardenLocations");
+$sth -> execute();
+#using db info to create map markers with popups
+my $locations = "<script type='text/javascript'>";
+while (my @row = $sth->fetchrow_array()){
+    #add the map marker
+    $locations = $locations . "var " . $row[2] . " = L.marker([". $row[0] . ", " . $row[1] . "],{icon: greenIcon}).addTo(mymap);";
+    #add the popup for the marker
+    $locations = $locations . $row[2] . ".bindPopup(\"<form action='data_visual.pl' method='post'><input type='submit' name='MapButton' value='$row[3]' /></form>\");";
+}
+$locations = $locations . "</script>";
+
+#This code just pulls the actual garden name from database based on the markerlabel that we got from map post
+my $sqlString = "SELECT MarkerLabel FROM GardenLocations WHERE GardenName='$selectedLoc';";
+my $sth = $dbh->prepare($sqlString);
+$sth -> execute();
+my $selectedLocMarker = "";
+while (my @row = $sth->fetchrow_array()){
+    $selectedLocMarker = $row[0];
+}
+
+#Use sql to fill in only the options that we have data for - Year Options
 my $sqlString = "SELECT DISTINCT curYear from Plants
                 INNER JOIN UserEntries ON Plants.plantID = UserEntries.plantID
-                WHERE location='$selectedLoc';";
+                WHERE location='$selectedLocMarker';";
 my $sth = $dbh->prepare($sqlString);
 $sth -> execute();
 my $fillDate = "";
@@ -63,10 +87,10 @@ my $fillDate = "";
 while (my @row = $sth->fetchrow_array()){
     $fillDate = $fillDate . "<option id='$row[0]' value='$row[0]'>$row[0]</option>";
 }
-#fill in plant options
+#Use sql to fill in only the options that we have data for - Plant Options
 $sqlString = "SELECT DISTINCT plantType from Plants
                 INNER JOIN UserEntries ON Plants.plantID = UserEntries.plantID
-                WHERE location='$selectedLoc';";
+                WHERE location='$selectedLocMarker';";
 $sth = $dbh->prepare($sqlString);
 $sth -> execute();
 my $fillPlants = "";
@@ -76,9 +100,10 @@ while (my @row = $sth->fetchrow_array()){
 }
 
 #make variables for bar graph
+#For the bar graphs there is 6 seperate variables, each one represents a section of the leaf damage, ex: 0 Damage
 $sqlString = "SELECT  curDate, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage from Plants
               INNER JOIN UserEntries ON Plants.plantID = UserEntries.plantID
-              WHERE location='$selectedLoc' AND plantType='$selectedPlant' AND curYear='$selectedYear';";
+              WHERE location='$selectedLocMarker' AND plantType='$selectedPlant' AND curYear='$selectedYear';";
 $sth = $dbh->prepare($sqlString);
 $sth -> execute();
 my $barDates = "";
@@ -98,7 +123,7 @@ while (my @row = $sth->fetchrow_array()){
     $barValues4 = $barValues4 . $row[6]/$row[1] . ",";
     $barValues5 = $barValues5 . $row[7]/$row[1] . ",";
 }
-
+#Adjust formatting to fit JS variable style
 $barValues0 = "var line0 = {
   x: [$barDates],
   y: [$barValues0],
@@ -164,6 +189,8 @@ my $tt_vars = {
                 keepLoc => '<input type="hidden" name="MapButton" value= "' . $selectedLoc . '"/>',
                 tester2 => "",
                 barVariables => "<script> $barValues0 $barValues1 $barValues2 $barValues3 $barValues4 $barValues5 </script>",
+                gardenLoc => $selectedLoc,
+                mapMarkers => $locations,
 
             };
 
