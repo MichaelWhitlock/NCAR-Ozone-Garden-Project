@@ -60,6 +60,7 @@ class Quiz extends React.Component {
                 response: (
                     <div className="correct">
                         <strong>Correct!</strong>
+                        <p>This is ozone damage</p>
                     </div>
                 ),
             });
@@ -69,6 +70,7 @@ class Quiz extends React.Component {
                 response: (
                     <div className="incorrect">
                         <strong>Incorrect!</strong>
+                        <p>This is not ozone damage</p>
                     </div>
                 ),
             });
@@ -81,6 +83,7 @@ class Quiz extends React.Component {
                 response: (
                     <div className="correct">
                         <strong>Correct!</strong>
+                        <p>There is no ozone damage on this leaf.</p>
                     </div>
                 ),
             });
@@ -90,6 +93,7 @@ class Quiz extends React.Component {
                 response: (
                     <div className="correct">
                         <strong>Correct!</strong>
+                        <p>The damage present is not caused by ozone.</p>
                     </div>
                 ),
             });
@@ -99,6 +103,7 @@ class Quiz extends React.Component {
                 response: (
                     <div className="incorrect">
                         <strong>Incorrect!</strong>
+                        <p>The damage on the leaves was caused by ozone damage</p>
                     </div>
                 ),
             });
@@ -116,17 +121,20 @@ class Quiz extends React.Component {
                         <img id="displayed_leaf" src={`${this.state.file}`} alt="A test image pay no mind" className="img-fluid" />
                         <br />
                         <br />
+
+                        {this.state.response}
+
                         <div className="row">
-
-                            {this.state.response}
-
                             <div className="col-lg-6">
                                 <button id="yes" type="button" className="btn btn-primary btn-block" name="yes" onClick={this.checkYes}>YES</button>
                             </div>
                             <div className="col-lg-6">
                                 <button id="no" type="button" className="btn btn-primary btn-block" name="no" onClick={this.checkNo}>NO</button>
                             </div>
-                            <button id="next_question" type="button" className="btn btn-primary btn-block" onClick={this.nextQuestion}>Next Question</button>
+
+                            <div className="col-lg-12">
+                                <button id="next_question" type="button" className="btn btn-primary btn-block" onClick={this.nextQuestion}>Next Question</button>
+                            </div>
                         </div>
                     </div>
                 </div>
