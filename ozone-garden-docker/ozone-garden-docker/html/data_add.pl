@@ -158,9 +158,22 @@ if ($cgi->param('submit')) {
     $insertLineUserEntriesTable = "INSERT INTO UserEntries(curDate, curYear, plantID, userID, daysSinceEmergence, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage)VALUES("."CURDATE()". ", "."CURDATE()". ", "."$plantID".", ". "0".", ". "$dateDifference".", ". "$Leaf0sCounter".", ". "$Leaf1sCounter".", ". "$Leaf2sCounter".", ". "$Leaf3sCounter".", ". "$Leaf4sCounter".", ". "$Leaf5sCounter".", ". "$Leaf6sCounter".");";
 
     eval {$dbh->do($insertLineUserEntriesTable)};
+
+    my $datavis_cookie = cookie( -NAME    => 'entry_cookie',
+                -VALUE   => $plantID,
+                -EXPIRES => '+10m');    # M for month, m for minute
+                
+
+    my $data_url  = "http://localhost/data_visual.pl";
+
+    print redirect( -URL     => $data_url,
+                    -COOKIE  => $datavis_cookie);
     
     #Output variable of the submit button
     $tt_vars->{'msg_err'} = "Data Submitted!";
+    #my $url = "http://localhost/data_visual.pl";
+    # print "Location: $url\n\n";
+    #exit;
 }
 
 
