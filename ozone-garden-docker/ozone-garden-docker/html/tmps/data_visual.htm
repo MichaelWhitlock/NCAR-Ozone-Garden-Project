@@ -159,6 +159,22 @@
                         </div>
                     </div>
                     </div>
+
+                     <form method="post" action="#ws">
+                        <input type="submit" class="btn btn-primary btn-block" name="submit" value="Submit" style="margin-top:2%;margin-bottom:2%;"></input>
+                        [% IF msg_err != "" %] 
+                            <div class="alert alert-danger center" role="alert">
+                                [% msg_err %]
+                            </div>
+                        [% END %]
+
+
+                        [% IF msg_suc != "" %] 
+                            <div class="alert alert-success center" role="alert">
+                                [% msg_suc %]
+                            </div>
+                        [% END %]
+                    </form> 
                 </div>
 
                 <div class="col-lg-4">
@@ -171,6 +187,8 @@
                         [% INSERT '/var/www/html/styles/um/includes/col-lg-4/research-inc.html' %]
                     </aside>
                 </div>
+
+
             </div>
 
 

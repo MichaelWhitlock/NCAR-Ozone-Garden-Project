@@ -194,15 +194,19 @@ my $tt_vars = {
                 barVariables => "<script> $barValues0 $barValues1 $barValues2 $barValues3 $barValues4 $barValues5 </script>",
                 gardenLoc => $selectedLoc,
                 mapMarkers => $locations,
+             };
 
-            };
+ my $tt_vars1;
 
+
+# retrieve cookie
+my $data_cookie = $cgi->cookie('entry_cookie');
 
 # checking for a form submission
 if ($cgi->param('submit')) {
 
 	# dev message
-	$tt_vars->{'msg_err'} = "Worksheet submitted";
+	$tt_vars->{'msg_err'} = $data_cookie;
 }
 
 
