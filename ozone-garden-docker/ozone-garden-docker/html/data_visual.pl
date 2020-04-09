@@ -53,34 +53,7 @@ my %tt_options = (INCLUDE_PATH => 'tmps', ABSOLUTE => 1, EVAL_PERL => 1);
 my $tt = Template->new(\%tt_options);
 
 #Testing Sending javascript variables using templating - Hunter
-my $tt_vars = {
-                tester => "<script type='text/javascript'>var line2 = {
-                                              x: [140, 157, 200, 220, 240],
-                                              y: [16, 5,30, 40, 32],
-                                              type: 'scatter',
-                                              name: '2019'
-                                            };
-                                            var layout = {title: '$temp : Coneflower' ,
-                                            xaxis: {
-                                                  title: 'Day Of Year',
-                                                  titlefont: {
-                                                  family: 'Arial, sans-serif',
-                                                  size: 18,
-                                                  color: 'grey'
-                                                },},
-                                             yaxis: {
-                                                  title: 'Proportion Of Injured Leaves',
-                                                  titlefont: {
-                                                  family: 'Arial, sans-serif',
-                                                  size: 18,
-                                                  color: 'grey'
-                                                },} };
-
-
-                                            </script>",
-                tester2 => "",
-
-            };
+my $tt_vars;
 
 
 # checking for a form submission

@@ -96,6 +96,7 @@ my $char;
 #Database variables
 my $insertLineUserEntriesTable;
 my $insertIntoPLantTable;
+
 my $tt_vars = {
         mapMarkers => $locations
 };
@@ -184,6 +185,7 @@ if ($cgi->param('submit')) {
     
     #Output variable of the submit button
     $tt_vars->{'msg_err'} = "Data Submitted!";
+    
     # get form submission variables
     my $leaf1 = $cgi->param('leaf1');
     my $leaf2 = $cgi->param('leaf2');
