@@ -96,7 +96,7 @@
 
             
 
-            <form method="post" action="#ws">
+            <form method="post" action="#ws" id="garden-info-form">
 
                 <p class="" style="margin-top:2%;">Choose a plant in the garden that has visible ozone injury. This will be the plant for which you collect data.</p>
 
@@ -118,8 +118,7 @@
                                     -->
                                     <select id="garden-location" name="garden-location" class="form-control">
                                         <option selected value="select-location">Select Location</option>
-                                        <option value="ncar-front">NCAR Front Entrance</option>
-                                        <option value="ncar-cafe">NCAR Cafe</option>
+                                        [% locationsSelect %]
                                     </select>
                                 </div>
 
@@ -140,6 +139,21 @@
                         </div>
                     </div>
                 </div>
+                <script type="text/javascript">
+                  //this function is called when a map button is pressed, it takes in the name of the button and uses that to select the equivalent item in the list
+                  function selectLocation(gardenName){
+                    var sel = document.getElementById("garden-location");
+                    var opts = sel.options;
+                    for (var opt, j = 0; opt = opts[j]; j++) {
+                      if (opt.value == gardenName) {
+                        sel.selectedIndex = j;
+                        break;
+                      }
+                    }
+                    scrollElement = document.getElementById("garden-info-form");
+                    scrollElement.scrollIntoView({behavior: "smooth"});
+                  }
+                </script>
 
                 <div class="row mt-5">
                     <div class="col">
