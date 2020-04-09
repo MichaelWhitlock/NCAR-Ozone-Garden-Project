@@ -1,0 +1,33 @@
+#mainDrop {
+	width: 70%;
+	text-align: left;
+	font-size: 24px;
+	line-height: 28px;
+	position: relative;
+    padding-bottom: 2px;
+    color: #bfd600;
+    font-weight: 700;
+    background: #454648;
+}
+
+#mainDropMenuItems {
+	width:70%;
+	font-size: 24px;
+	line-height: 28px;
+	position: relative;
+    padding-bottom: 2px;
+    color: #bfd600;
+    font-weight: 700;
+    background: #454648;
+}
+
+.green{
+	color: #bfd600 !important;
+}
+
+#Map-Modal{
+	width:90% !important;
+}
+
+
+

@@ -16,6 +16,9 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     accessToken: 'pk.eyJ1IjoiaHVudGVyNTI4MCIsImEiOiJjazZ0cDF5dWUwMWk1M21wbm8wanUxcnBnIn0.Kx78AVroooRQnU_oQlJ8qg'
 }).addTo(mymap);
 
+$('#Map-Modal').on('shown.bs.modal', function () { // chooseLocation is the id of the modal.
+    mymap.invalidateSize();
+ });
 //Add Markers
 //var marker = L.marker([39.9783, -105.275],{icon: greenIcon}).addTo(mymap);
 //NCAR.bindPopup("<form action='data_visual.pl' method='post'><input type='submit' name='MapButton' value='NCAR Boulder' /></form>")

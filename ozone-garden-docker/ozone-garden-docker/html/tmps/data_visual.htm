@@ -7,9 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="description" content="CGD ozone garden observations information and worksheet" />
 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>
+
     <!-- css -->
     [% INSERT '/var/www/html/styles/um/css/css-include.html' %]
 
+    <link href="../styles/um/css/data_visual.css" rel="stylesheet">
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
         <script src="/styles/um/js/html5shiv.js"></script>
@@ -57,42 +65,61 @@
                 <div class="col-lg-8">
                     <div class="post-image">
                         <div class="post-heading">
-                            <h1>Ozone Garden Observations <span style="vertical-align: middle;" class="small badge badge-primary"><a title="Download PDF" class="text-white" href="ozone-observations.pdf"><img width="20px" src="/Images/icon-pdf.png">&nbsp;Download PDF</a></span></h1>
+                            <h1>Viewing Data for [% gardenLoc %]</h1>
+                            <a href="" data-toggle="modal" data-target="#Map-Modal">Switch Locations</a>
                         </div>
                     </div>
 
                     <div class="post-border-bottom">
                         
 
-                        <h5 class="mt-4">Did you know that Colorado’s Front Range has high concentrations of ozone pollution?</h5> 
+                        <form method="post"> 
+                            <div class="form-group">
+                                    <label for="graph-type">Graph Type</label>
+                                    <select id="graph-type" name="graph-type" class="form-control">
+                                        <option selected value="select-graph-type">Graph Type</option>
+                                        <option id="single" value="single">Single Plant</option>
+                                        <option id="comparison" value="comparison">Comparisons</option>
+                                    </select>
+                            </div>
+
+                            <div class="form-group" id="plant-type-group">
+                                    <label for="plant-type">Plant Type</label>
+                                    <select id="plant-type" name="plant-type" class="form-control">
+                                        <option id="select-plant-type" selected value="select-plant-type">Plant Type</option>
+                                        [% fillPlants %]
+                                    </select>
+                            </div>
+
+                            <div class="form-group" id="year-select-group">
+                                    <label for="year-select">Year</label>
+                                    <select id="year-select" name="year-select" class="form-control" onchange="this.form.submit()">
+                                        <option selected value="select-year">Year</option>
+                                        [% fillDate %]
+                                    </select>
+                            </div>
+
+                            [% keepLoc %]
+
+
+                        </form>
+
+                        
+                        
 
                         <br>
 
-                        <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
-                              <div class="carousel-inner">
-
-                                <div class="carousel-item active">
-                                  <div ID = "tester"></div>
-                                </div>
-                                <div class="carousel-item"> 
-                                    <div ID = "tester3"></div>
-                                 </div>
-                            </div>
-                              <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                              </a>
-                              <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                              </a>
-                            </div>
+                        <div ID = "tester3"></div>
+                        <div ID = "tester"></div>
                         
+                        [% barTitle %]
+
                         [% tester %]
                         
                         [% tester2 %]
-                        <br>
 
+                        [% barVariables %]
+                        <br>
                         <p>For more comments or questions contact Danica Lombardozzi [ <a href="dll@ucar.edu">dll@ucar.edu</a> ]</p>
 
                     <form method="post" action="#ws">
@@ -111,6 +138,26 @@
                         [% END %]
                     </form>
 
+                        <div class="modal fade" id="Map-Modal" tabindex="-1" role="dialog" aria-labelledby="ozone-modalLoginLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="ozone-modalLoginLabel"><i class="fas fa-lock"></i>Choose New Location From the Map</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <form method="POST">
+                                            
+                                            <div id="mapid" style="width:100%;height:400px">
+                                            </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
 
@@ -138,11 +185,14 @@
     <footer>
         <!-- footer include -->
         [% INSERT '/var/www/html/styles/um/includes/footer/footer-inc.html' %]
+        
     </footer>
 </div>
 
 <!-- javascript include -->
 [% INSERT '/var/www/html/styles/um/js/js-include.html' %]
+<script type='text/javascript' language='javascript' src="styles/um/js/map.js"></script>
 <script type='text/javascript' language='javascript' src="styles/um/js/data_visuals.js"></script>
+[% mapMarkers %]
 </body>
 </html>
