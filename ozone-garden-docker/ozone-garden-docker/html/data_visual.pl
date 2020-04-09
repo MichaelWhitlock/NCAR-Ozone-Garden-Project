@@ -13,7 +13,12 @@ use Text::CSV;
 # uncomment line below to send debug messages to the browser, comment back when ready for production
 use CGI::Carp qw( warningsToBrowser fatalsToBrowser );
 
-
+#database connection -Hunter
+my $data_source = "DBI:mysql:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:database=TannerTester";
+my $username = "admin";
+my $auth = "greenteam";
+my $dbh = DBI->connect($data_source, $username, $auth,
+          {RaiseError => 1} );
 
 # time vars
 my $now = localtime;
@@ -29,13 +34,29 @@ my $email_ryanj = 'ryanj@ucar.edu';
 
 # cgi vars
 my $cgi = CGI->new;
-my $selectedLoc = $cgi->param('MapButton');
+my $selectedLoc;
 my $selectedPlant = $cgi->param('plant-type');
 my $selectedYear = $cgi->param('year-select');
+$selectedLoc = $cgi->param('MapButton');
 
-#default mapButton to NCAR
-if ($selectedLoc eq ""){
-  $selectedLoc = "NCAR";
+#default mapButton to NCAR unless there is a cookie passed from data add
+my $data_cookie = $cgi->cookie('entry_cookie');
+if($selectedLoc eq ""){
+  if ($data_cookie eq ""){
+    $selectedLoc = "NCAR";
+  }
+  else{
+    my $sth = $dbh->prepare("SELECT location FROM Plants WHERE plantID = $data_cookie;");
+    $sth->execute();
+    my @row = $sth->fetchrow_array();
+    $selectedLoc = $row[0];
+    my $datavis_cookie = cookie( -NAME    => 'entry_cookie',
+                  -VALUE   => "",
+                  -EXPIRES => '+1m');
+    
+
+
+  }
 }
 #default plant to coneflower
 if ($selectedPlant eq ""){
@@ -47,12 +68,7 @@ if ($selectedYear eq ""){
 }
 
 
-#database connection -Hunter
-my $data_source = "DBI:mysql:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:database=TannerTester";
-my $username = "admin";
-my $auth = "greenteam";
-my $dbh = DBI->connect($data_source, $username, $auth,
-          {RaiseError => 1} );
+
 
 #This code is stolen from main page map, it uses info from database to fill in garden location markers for the map
 my $sth = $dbh->prepare("SELECT Latitude,Longitude,MarkerLabel,GardenName FROM GardenLocations");
@@ -200,7 +216,7 @@ my $tt_vars = {
 
 
 # retrieve cookie
-my $data_cookie = $cgi->cookie('entry_cookie');
+
 
 # checking for a form submission
 if ($cgi->param('submit')) {
