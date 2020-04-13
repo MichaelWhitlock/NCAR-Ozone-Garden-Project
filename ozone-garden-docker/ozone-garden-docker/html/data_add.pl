@@ -141,68 +141,73 @@ if ($cgi->param('submit')) {
 
     }
 
+    # only submit if there are leaves selected 
     #Gets the amount of leaves used
     $Leaf0sCounter = 10-$Leaf0sCounter + 1;
     
+    if($Leaf0sCounter != 0 && $location ne "select-location" && $plantType ne "select-plant"){
+        #DB connection
+        my $user = "admin";
+        my $auth = "greenteam";
+        my $dsn = "DBI:mysql:database=TannerTester;host=greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com;port=3306";
+        my $dbh = DBI->connect($dsn,$user,$auth);
 
-    #DB connection
-    my $user = "admin";
-    my $auth = "greenteam";
-    my $dsn = "DBI:mysql:database=TannerTester;host=greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com;port=3306";
-    my $dbh = DBI->connect($dsn,$user,$auth);
 
-
-    
-
-    #Statement that pulls/gives to the database
-    my $sth = $dbh->prepare("SELECT count(plantID), plantID FROM Plants WHERE location = '$location' AND plantType = '$plantType';");
-    $sth->execute();
-    my @row = $sth->fetchrow_array();
         
-    #Variables for the ifstatement/plantid
-    my $plantCount = $row[0];
-    my $plantID;
 
-    
-    #Sets plant id to the row, if row is empty plantID is nothing
-    $plantID = $row[1];
+        #Statement that pulls/gives to the database
+        my $sth = $dbh->prepare("SELECT count(plantID), plantID FROM Plants WHERE location = '$location' AND plantType = '$plantType';");
+        $sth->execute();
+        my @row = $sth->fetchrow_array();
+            
+        #Variables for the ifstatement/plantid
+        my $plantCount = $row[0];
+        my $plantID;
 
-    #If the select statement did not find a plant w/ location and type, then make a new entry in the table.
-    if($plantCount == 0){
-        #Insert into the plant table a new one w/ plantType and location of entered data and current date_current(this assumes the first time it is entered is the date of emergence)
-        $insertIntoPLantTable = "INSERT INTO Plants(location, plantType, dateOfEmergence) VALUES ('$location','$plantType',CURDATE());";
-        eval {$dbh->do($insertIntoPLantTable)};
-        $sth = $dbh->prepare("SELECT plantID FROM Plants WHERE location = '$location' AND plantType = '$plantType';");
+        
+        #Sets plant id to the row, if row is empty plantID is nothing
+        $plantID = $row[1];
+
+        #If the select statement did not find a plant w/ location and type, then make a new entry in the table.
+        if($plantCount == 0){
+            #Insert into the plant table a new one w/ plantType and location of entered data and current date_current(this assumes the first time it is entered is the date of emergence)
+            $insertIntoPLantTable = "INSERT INTO Plants(location, plantType, dateOfEmergence) VALUES ('$location','$plantType',CURDATE());";
+            eval {$dbh->do($insertIntoPLantTable)};
+            $sth = $dbh->prepare("SELECT plantID FROM Plants WHERE location = '$location' AND plantType = '$plantType';");
+            $sth->execute();
+            @row = $sth->fetchrow_array();
+            $plantID = $row[0];
+        }
+
+        #Get date difference from current date and dateOfEmergence
+        $sth = $dbh->prepare("SELECT DATEDIFF(CURDATE(),dateOfEmergence) FROM Plants WHERE plantID = $plantID;");
         $sth->execute();
         @row = $sth->fetchrow_array();
-        $plantID = $row[0];
+        my $dateDifference = $row[0];
+
+        
+        $insertLineUserEntriesTable = "INSERT INTO UserEntries(curDate, curYear, plantID, userID, daysSinceEmergence, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage)VALUES("."CURDATE()". ", "."CURDATE()". ", "."$plantID".", ". "0".", ". "$dateDifference".", ". "$Leaf0sCounter".", ". "$Leaf1sCounter".", ". "$Leaf2sCounter".", ". "$Leaf3sCounter".", ". "$Leaf4sCounter".", ". "$Leaf5sCounter".", ". "$Leaf6sCounter".");";
+
+        eval {$dbh->do($insertLineUserEntriesTable)};
+
+        my $datavis_cookie = cookie( -NAME    => 'entry_cookie',
+                    -VALUE   => $plantID,
+                    -EXPIRES => '+10m');    # M for month, m for minute
+                    
+
+        my $data_url  = "http://localhost/data_visual.pl";
+
+        print redirect( -URL     => $data_url,
+                        -COOKIE  => $datavis_cookie);
+        
+        #Output variable of the submit button
+        $tt_vars->{'msg_err'} = "Data Submitted!";
+
+        }
+        $tt_vars->{'msg_err'} = "Missing Data Entries";
     }
 
-    #Get date difference from current date and dateOfEmergence
-    $sth = $dbh->prepare("SELECT DATEDIFF(CURDATE(),dateOfEmergence) FROM Plants WHERE plantID = $plantID;");
-    $sth->execute();
-    @row = $sth->fetchrow_array();
-    my $dateDifference = $row[0];
-
     
-    $insertLineUserEntriesTable = "INSERT INTO UserEntries(curDate, curYear, plantID, userID, daysSinceEmergence, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage)VALUES("."CURDATE()". ", "."CURDATE()". ", "."$plantID".", ". "0".", ". "$dateDifference".", ". "$Leaf0sCounter".", ". "$Leaf1sCounter".", ". "$Leaf2sCounter".", ". "$Leaf3sCounter".", ". "$Leaf4sCounter".", ". "$Leaf5sCounter".", ". "$Leaf6sCounter".");";
-
-    eval {$dbh->do($insertLineUserEntriesTable)};
-
-    my $datavis_cookie = cookie( -NAME    => 'entry_cookie',
-                -VALUE   => $plantID,
-                -EXPIRES => '+10m');    # M for month, m for minute
-                
-
-    my $data_url  = "http://localhost/data_visual.pl";
-
-    print redirect( -URL     => $data_url,
-                    -COOKIE  => $datavis_cookie);
-    
-    #Output variable of the submit button
-    $tt_vars->{'msg_err'} = "Data Submitted!";
-
-}
 
 
 # set the template to use
