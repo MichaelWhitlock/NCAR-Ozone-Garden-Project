@@ -5,7 +5,7 @@ function getRandomInt(max) {
 }
 
 function getFilePath() {
-    var filepath = "/Images/ozone/1.jpg";
+    var filepath = "/Images/ozone/leaf1.jpg";
     var plantType = "ozone";
 
     const type = getRandomInt(3); 
@@ -33,7 +33,7 @@ class Quiz extends React.Component {
 
         this.state = {
             response: "",
-            file: "/Images/ozone/1.jpg",
+            file: "/Images/ozone/leaf1.jpg",
             type: "ozone",
         };
     }
@@ -107,7 +107,7 @@ class Quiz extends React.Component {
         return(
 
             <div className="row">
-                <div className="col-lg-6">
+                <div className="col-lg-8">
                     <div className = "bg-light text-center p-4 border rounded">
                         <h5>Is This Ozone Damage?</h5>
                         <br />
