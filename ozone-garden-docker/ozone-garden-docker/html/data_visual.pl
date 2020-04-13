@@ -46,7 +46,9 @@ if($selectedLoc eq ""){
     $selectedLoc = "NCAR";
   }
   else{
-    my $sth = $dbh->prepare("SELECT location FROM Plants WHERE plantID = $data_cookie;");
+    my $sth = $dbh->prepare("SELECT  GardenName from GardenLocations
+                            INNER JOIN Plants ON Plants.location = GardenLocations.MarkerLabel
+                            WHERE plantID = $data_cookie;");
     $sth->execute();
     my @row = $sth->fetchrow_array();
     $selectedLoc = $row[0];
