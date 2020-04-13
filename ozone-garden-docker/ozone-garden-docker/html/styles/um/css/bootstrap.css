@@ -78,6 +78,14 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0.5rem;
 }
 
+h7 {
+  font-size: 18px;
+  font-family: Poppins,sans-serif;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
 p {
   margin-top: 0;
   margin-bottom: 1rem;
@@ -4928,7 +4936,7 @@ input[type="button"].btn-block {
 .badge {
   display: inline-block;
   padding: 0.25em 0.4em;
-  font-size: 75%;
+  font-size: 40%;
   font-weight: 700;
   line-height: 1;
   text-align: center;
@@ -6311,7 +6319,7 @@ a.close.disabled {
   align-items: center;
   -ms-flex-pack: center;
   justify-content: center;
-  width: 15%;
+  width: 5%;
   color: #fff;
   text-align: center;
   opacity: 0.5;
@@ -6384,7 +6392,7 @@ a.close.disabled {
   margin-left: 3px;
   text-indent: -999px;
   cursor: pointer;
-  background-color: #fff;
+  background-color: #343a40;
   background-clip: padding-box;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
