@@ -1,0 +1,136 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark d-md-none">
+  <a class="navbar-brand" href="#">Ozone Garden Links</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/data_add.pl">Add Data</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/training.pl">Training</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/gallery.pl">Image Gallery</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/data_visual.pl">Data Visuals</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Research in CGD
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/research/">Overview</a>
+          <a class="dropdown-item" href="/research/research-integration.html" id="research-2">Research Integration</a>
+          <a class="dropdown-item" href="/projects/" id="research-3">Interdisciplinary Projects</a>
+          <a class="dropdown-item" href="/research/collaborative-science.html" id="research-4">Collaborative Science</a>
+          <a class="dropdown-item" href="http://www.cesm.ucar.edu">CESM Website</a>
+        </div>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#ozone-login" data-toggle="modal" data-target="#ozone-modalLogin">Garden Manager Login</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ozone login modal -->
+<div class="modal fade" id="ozone-modalLogin" tabindex="-1" role="dialog" aria-labelledby="ozone-modalLoginLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ozone-modalLoginLabel"><i class="fas fa-lock"></i> Ozone Garden Login</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form class="form-signin" method="POST" action="/ozone_login.pl">
+                    <img class="mb-1 img-fluid" src="/Images/logos/logo-ncar-600.png" alt="NCAR Logo">
+                    <p class="my-0 text-cesm mb-1 small">Please login using your credentials</p>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input name="login_email" type="text" id="email" class="form-control" placeholder="..." required autofocus>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input name="login_password" type="password" id="password" class="form-control" placeholder="..." required>
+                    </div>
+
+                    <a href="/ozone_register.pl" class="small">Register here if you are a new garden manager</a>
+
+                    <div class="btn-group mt-4 w-100" role="group">
+                        <input type="hidden" name="formUser" value="login">
+                        <button class="btn btn-primary" type="submit">Login</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- ozone register modal -->
+<div class="modal fade" id="ozone-modalRegister" tabindex="-1" role="dialog" aria-labelledby="ozone-modalRegisterLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ozone-modalRegisterLabel"><i class="fas fa-lock-open"></i> Ozone Garden Register</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form class="form-signin" method="POST" action="ozone_register.pl">
+                    <img class="mb-1 img-fluid" src="/Images/logos/logo-ncar-600.png" alt="NCAR Logo">
+                    <p class="my-0 text-cesm mb-1 small">Please fill out the fields to create your account</p>
+
+                    <div class="form-group">
+                        <label class="mb-0" for="name">Name</label>
+                        <input name="register_name" type="text" id="name" class="form-control" placeholder="..." required autofocus>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="mb-0" for="email">Email</label>
+                        <input name="register_email" type="text" id="email" class="form-control" placeholder="..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="mb-0" for="institution">Institution <small class="text-muted">*Not required</small></label>
+                        <input name="register_institution" type="text" id="institution" class="form-control" placeholder="...">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="mb-0" for="password">Password</label>
+                        <input name="register_password" type="password" id="password" class="form-control" placeholder="..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="mb-0" for="password2">Verify Password</label>
+                        <input name="register_password2" type="password" id="password2" class="form-control" placeholder="..." required>
+                    </div>
+
+                    <div class="btn-group mt-4 w-100" role="group">
+                        <input type="hidden" name="formUser" value="register">
+                        <button class="btn btn-success" type="submit">Register</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
