@@ -216,10 +216,6 @@ my $tt_vars = {
 
  my $tt_vars1;
 
-
-# retrieve cookie
-
-
 # checking for a form submission
 if ($cgi->param('submit')) {
 
