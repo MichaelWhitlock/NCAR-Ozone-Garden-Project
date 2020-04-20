@@ -66,16 +66,17 @@
                     <div class="post-image">
                         <div class="post-heading">
                             <h1>Viewing Data for [% gardenLoc %]</h1>
+                            <h4 class="text-muted">Explore ozone garden data collected by citizen scientists from across the country. Select something from each drop down menu below to see a graph of those inputs</h4>
                             <a href="" data-toggle="modal" data-target="#Map-Modal">Switch Locations</a>
                         </div>
+                        
                     </div>
 
-                    <div class="post-border-bottom">
-                        
+                    <div class="post-border-bottom">              
 
                         <form method="post"> 
-                            <div class="form-group">
-                                    <label for="graph-type">Graph Type</label>
+                            <div class="form-group">What do you want to see?
+                                    <label for="graph-type"></label>
                                     <select id="graph-type" name="graph-type" class="form-control">
                                         <option selected value="select-graph-type">Graph Type</option>
                                         <option id="single" value="single">Single Plant</option>
@@ -83,7 +84,7 @@
                                     </select>
                             </div>
 
-                            <div class="form-group" id="plant-type-group">
+                            <div class="form-group" id="plant-type-group" style="display: none;">
                                     <label for="plant-type">Plant Type</label>
                                     <select id="plant-type" name="plant-type" class="form-control">
                                         <option id="select-plant-type" selected value="select-plant-type">Plant Type</option>
@@ -91,13 +92,60 @@
                                     </select>
                             </div>
 
-                            <div class="form-group" id="year-select-group">
+                            <div class="form-group" id="year-select-group" style="display: none;">
                                     <label for="year-select">Year</label>
                                     <select id="year-select" name="year-select" class="form-control" onchange="this.form.submit()">
                                         <option selected value="select-year">Year</option>
                                         [% fillDate %]
                                     </select>
                             </div>
+
+                            <div class="form-group" id="comparison-choice-group" style="display: none;">
+                                    <label for="comparison-choice">Comparison Type</label>
+                                    <select id="comparison-choice" name="comparison-choice" class="form-control">
+                                        <option selected id="select-comparison" value="select-comparison">Comparison Type</option>
+                                        <option id="compare-years" value="compare-years">Compare Years</option>
+                                        <option id="compare-plants" value="compare-plants">Compare Plants</option>
+                                        <option id="compare-locations" value="compare-locations">Compare Locations</option>
+                                    </select>
+                            </div>
+
+                            <div class="comparison-div" id="comparison-plant-div">
+                                <div class="form-group" id="comparison-plant1" style="display: none;">
+                                    <label for="comparison-plant1">Plant 1</label>
+                                    <select id="comparison-plant1" name="comparison-plant1" class="form-control">
+                                        <option>Plant 1</option>
+                                        [% fillPlants %]
+                                    </select>
+                                </div>
+
+                                <div class="form-group" id="comparison-plant2" style="display: none;" >
+                                    <label for="comparison-plant2">Plant 2</label>
+                                    <select id="comparison-plant2" name="comparison-plant2" class="form-control">
+                                        <option>Plant 2</option>
+                                        [% fillPlants %]
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="comparison-div" id="comparison-year-div">
+                                <div class="form-group" id="comparison-year1" style="display: none;">
+                                    <label for="comparison-year1">Year 1</label>
+                                    <select id="comparison-year1" name="comparison-year1" class="form-control">
+                                        <option>Year 1</option>
+                                        [% fillDate %]
+                                    </select>
+                                </div>
+
+                                <div class="form-group" id="comparison-year2" style="display: none;" >
+                                    <label for="comparison-year2">Year 2</label>
+                                    <select id="comparison-year2" name="comparison-year2" class="form-control">
+                                        <option>Year 2</option>
+                                        [% fillDate %]
+                                    </select>
+                                </div>
+                            </div>
+                            
 
                             [% keepLoc %]
 
@@ -109,7 +157,7 @@
 
                         <br>
 
-                        <div ID = "tester3"></div>
+                        <div ID = "bar-div"></div>
                         <div ID = "tester"></div>
                         
                         [% barTitle %]

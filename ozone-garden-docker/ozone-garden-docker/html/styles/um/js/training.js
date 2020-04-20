@@ -108,8 +108,25 @@ class Quiz extends React.Component {
 
             <div className="row">
                 <div className="col-lg-8">
-                    <div className = "bg-light text-center p-4 border rounded">
-                        <h5>Is This Ozone Damage?</h5>
+                    <div className = "bg-light p-4 border rounded">
+                        <h5 className="text-center">Is This Ozone Damage?</h5>
+                        <br />
+                        <h5>To summarize, ozone injury:</h5>
+
+                        <ul>
+
+                            <li>Typically occurs on the top surface of the leaf</li>
+
+                            <li>Starts as stipple, but can progress to yellowing and patches of tissue death</li>
+
+                            <li>Only occurs between the leaf veins</li>
+
+                            <li>Accumulates through time</li>
+
+                            <li>Affects older leaves</li>
+
+                        </ul>
+
                         <br />
                         <img id="displayed_leaf" src={`${this.state.file}`} alt="A test image pay no mind" className="img-fluid" />
                         <br />
