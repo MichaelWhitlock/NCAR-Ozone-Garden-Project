@@ -37,6 +37,7 @@ my $cgi = CGI->new;
 my $selectedLoc;
 my $selectedPlant = $cgi->param('plant-type');
 my $selectedYear = $cgi->param('year-select');
+my $graphType = $cgi->param('graph-type');
 $selectedLoc = $cgi->param('MapButton');
 
 #default mapButton to NCAR unless there is a cookie passed from data add
@@ -68,10 +69,13 @@ if ($selectedPlant eq ""){
 if ($selectedYear eq ""){
   $selectedYear = "2020";
 }
+#default graphType to single
+if ($graphType eq ""){
+  $graphType = "single"
+}
 
 
-
-
+my $locationsSelect = ".";
 #This code is stolen from main page map, it uses info from database to fill in garden location markers for the map
 my $sth = $dbh->prepare("SELECT Latitude,Longitude,MarkerLabel,GardenName FROM GardenLocations");
 $sth -> execute();
@@ -82,6 +86,8 @@ while (my @row = $sth->fetchrow_array()){
     $locations = $locations . "var " . $row[2] . " = L.marker([". $row[0] . ", " . $row[1] . "],{icon: greenIcon}).addTo(mymap);";
     #add the popup for the marker
     $locations = $locations . $row[2] . ".bindPopup(\"<form action='data_visual.pl' method='post'><input type='submit' name='MapButton' value='$row[3]' /></form>\");";
+    #set options for garden location select to be the same as map markers
+    $locationsSelect = $locationsSelect . "<option value=\"" . $row[2] . "\">" . $row[3] . "</option>";
 }
 $locations = $locations . "</script>";
 
@@ -117,67 +123,72 @@ while (my @row = $sth->fetchrow_array()){
     $fillPlants = $fillPlants . "<option id='$row[0]' value='$row[0]'>$row[0]</option>";
 }
 
-#make variables for bar graph
-#For the bar graphs there is 6 seperate variables, each one represents a section of the leaf damage, ex: 0 Damage
-$sqlString = "SELECT  curDate, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage from Plants
-              INNER JOIN UserEntries ON Plants.plantID = UserEntries.plantID
-              WHERE location='$selectedLocMarker' AND plantType='$selectedPlant' AND curYear='$selectedYear';";
-$sth = $dbh->prepare($sqlString);
-$sth -> execute();
-my $barDates = "";
-my $barValues0 = "";
-my $barValues1 = "";
-my $barValues2 = "";
-my $barValues3 = "";
-my $barValues4 = "";
-my $barValues5 = "";
+  my $barDates = "";
+  my $barValues0 = "";
+  my $barValues1 = "";
+  my $barValues2 = "";
+  my $barValues3 = "";
+  my $barValues4 = "";
+  my $barValues5 = "";
 
-while (my @row = $sth->fetchrow_array()){
-    $barDates = $barDates . "'$row[0]'" . ",";
-    $barValues0 = $barValues0 . $row[2]/$row[1] . ",";
-    $barValues1 = $barValues1 . $row[3]/$row[1] . ",";
-    $barValues2 = $barValues2 . $row[4]/$row[1] . ",";
-    $barValues3 = $barValues3 . $row[5]/$row[1] . ",";
-    $barValues4 = $barValues4 . $row[6]/$row[1] . ",";
-    $barValues5 = $barValues5 . $row[7]/$row[1] . ",";
+#make variables for bar graph if graphType is single
+if($graphType eq "single"){
+  #For the bar graphs there is 6 seperate variables, each one represents a section of the leaf damage, ex: 0 Damage
+  $sqlString = "SELECT  curDate, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage from Plants
+                INNER JOIN UserEntries ON Plants.plantID = UserEntries.plantID
+                WHERE location='$selectedLocMarker' AND plantType='$selectedPlant' AND curYear='$selectedYear';";
+  $sth = $dbh->prepare($sqlString);
+  $sth -> execute();
+
+  while (my @row = $sth->fetchrow_array()){
+      $barDates = $barDates . "'$row[0]'" . ",";
+      $barValues0 = $barValues0 . $row[2]/$row[1] . ",";
+      $barValues1 = $barValues1 . $row[3]/$row[1] . ",";
+      $barValues2 = $barValues2 . $row[4]/$row[1] . ",";
+      $barValues3 = $barValues3 . $row[5]/$row[1] . ",";
+      $barValues4 = $barValues4 . $row[6]/$row[1] . ",";
+      $barValues5 = $barValues5 . $row[7]/$row[1] . ",";
+  }
+  #Adjust formatting to fit JS variable style
+  $barValues0 = "var line0 = {
+    x: [$barDates],
+    y: [$barValues0],
+    name: '0%',
+    type: 'bar'
+  };";
+  $barValues1 = "var line1 = {
+    x: [$barDates],
+    y: [$barValues1],
+    name: '1-6%',
+    type: 'bar'
+  };";
+  $barValues2 = "var line2 = {
+    x: [$barDates],
+    y: [$barValues3],
+    name: '7-25%',
+    type: 'bar'
+  };";
+  $barValues3 = "var line3 = {
+    x: [$barDates],
+    y: [$barValues3],
+    name: '26-50%',
+    type: 'bar'
+  };";
+  $barValues4 = "var line4 = {
+    x: [$barDates],
+    y: [$barValues4],
+    name: '51-75%',
+    type: 'bar'
+  };";
+  $barValues5 = "var line5 = {
+    x: [$barDates],
+    y: [$barValues5],
+    name: '76-100%',
+    type: 'bar'
+  };";
 }
-#Adjust formatting to fit JS variable style
-$barValues0 = "var line0 = {
-  x: [$barDates],
-  y: [$barValues0],
-  name: '0%',
-  type: 'bar'
-};";
-$barValues1 = "var line1 = {
-  x: [$barDates],
-  y: [$barValues1],
-  name: '1-6%',
-  type: 'bar'
-};";
-$barValues2 = "var line2 = {
-  x: [$barDates],
-  y: [$barValues3],
-  name: '7-25%',
-  type: 'bar'
-};";
-$barValues3 = "var line3 = {
-  x: [$barDates],
-  y: [$barValues3],
-  name: '26-50%',
-  type: 'bar'
-};";
-$barValues4 = "var line4 = {
-  x: [$barDates],
-  y: [$barValues4],
-  name: '51-75%',
-  type: 'bar'
-};";
-$barValues5 = "var line5 = {
-  x: [$barDates],
-  y: [$barValues5],
-  name: '76-100%',
-  type: 'bar'
-};";
+
+
 
 
 # tt vars
@@ -212,6 +223,7 @@ my $tt_vars = {
                 barVariables => "<script> $barValues0 $barValues1 $barValues2 $barValues3 $barValues4 $barValues5 </script>",
                 gardenLoc => $selectedLoc,
                 mapMarkers => $locations,
+                fillLoc => $locationsSelect,
              };
 
  my $tt_vars1;

@@ -7,6 +7,8 @@ function singleOrComparison() {
         document.getElementById("comparison-plant2").style.display = "none";
         document.getElementById("comparison-year1").style.display = "none";
         document.getElementById("comparison-year2").style.display = "none";
+        document.getElementById("comparison-location1").style.display = "none";
+        document.getElementById("comparison-location2").style.display = "none";
     } else {
         if (document.getElementById("comparison").selected) {
             document.getElementById("comparison-choice-group").style.display = "block";
@@ -20,6 +22,8 @@ function singleOrComparison() {
             document.getElementById("comparison-plant2").style.display = "none";
             document.getElementById("comparison-year1").style.display = "none";
             document.getElementById("comparison-year2").style.display = "none";
+            document.getElementById("comparison-location1").style.display = "none";
+            document.getElementById("comparison-location2").style.display = "none";
         }
     }
 }
@@ -38,24 +42,39 @@ window.onload = plantCheck();
 var plantType = document.getElementById('plant-type');
 plantType.addEventListener('change', plantCheck ,false);
 
+//similar to above code, checks everytime there is an update to the comparisons select field and then runs comparisonCheck Function to show/hide other fields
 function comparisonCheck() {
     if (document.getElementById("select-comparison").selected) {
         document.getElementById("comparison-plant1").style.display = "none";
         document.getElementById("comparison-plant2").style.display = "none";
         document.getElementById("comparison-year1").style.display = "none";
         document.getElementById("comparison-year2").style.display = "none";
+        document.getElementById("comparison-location1").style.display = "none";
+        document.getElementById("comparison-location2").style.display = "none";
     }
-    if(document.getElementById("compare-years").selected){
+    else if(document.getElementById("compare-years").selected){
         document.getElementById("comparison-plant1").style.display = "none";
         document.getElementById("comparison-plant2").style.display = "none";
         document.getElementById("comparison-year1").style.display = "block";
         document.getElementById("comparison-year2").style.display = "block";
+        document.getElementById("comparison-location1").style.display = "none";
+        document.getElementById("comparison-location2").style.display = "none";
     }
-    if(document.getElementById("compare-plants").selected){
+    else if(document.getElementById("compare-plants").selected){
         document.getElementById("comparison-plant1").style.display = "block";
         document.getElementById("comparison-plant2").style.display = "block";
         document.getElementById("comparison-year1").style.display = "none";
         document.getElementById("comparison-year2").style.display = "none";
+        document.getElementById("comparison-location1").style.display = "none";
+        document.getElementById("comparison-location2").style.display = "none";
+    }
+    else{
+        document.getElementById("comparison-plant1").style.display = "none";
+        document.getElementById("comparison-plant2").style.display = "none";
+        document.getElementById("comparison-year1").style.display = "none";
+        document.getElementById("comparison-year2").style.display = "none";
+        document.getElementById("comparison-location1").style.display = "block";
+        document.getElementById("comparison-location2").style.display = "block";
     }
 }
 window.onload = comparisonCheck();
