@@ -116,7 +116,7 @@ comparisonType.addEventListener('change', comparisonCheck ,false);
 //                   color: 'grey'
 //                 },} };
 
-var dataBar = [line0,line1,line2,line3,line4,line5];
+
 
 
 

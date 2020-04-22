@@ -69,6 +69,9 @@ if ($selectedPlant eq ""){
 if ($selectedYear eq ""){
   $selectedYear = "2020";
 }
+if ($selectedYear eq "select-year"){
+  $selectedYear = "2020";
+}
 #default graphType to single
 if ($graphType eq ""){
   $graphType = "single"
@@ -124,30 +127,38 @@ while (my @row = $sth->fetchrow_array()){
 }
 
   my $barDates = "";
+  my $barDates1 = "";
   my $barValues0 = "";
   my $barValues1 = "";
   my $barValues2 = "";
   my $barValues3 = "";
   my $barValues4 = "";
   my $barValues5 = "";
+  my $graphVariables = "";
+  my $graphTitle = "";
 
 #make variables for bar graph if graphType is single
 if($graphType eq "single"){
   #For the bar graphs there is 6 seperate variables, each one represents a section of the leaf damage, ex: 0 Damage
-  $sqlString = "SELECT  curDate, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage from Plants
+  $sqlString = "SELECT curDate, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage from Plants
                 INNER JOIN UserEntries ON Plants.plantID = UserEntries.plantID
                 WHERE location='$selectedLocMarker' AND plantType='$selectedPlant' AND curYear='$selectedYear';";
   $sth = $dbh->prepare($sqlString);
   $sth -> execute();
 
+  my $lastDate = '';
+
   while (my @row = $sth->fetchrow_array()){
-      $barDates = $barDates . "'$row[0]'" . ",";
-      $barValues0 = $barValues0 . $row[2]/$row[1] . ",";
-      $barValues1 = $barValues1 . $row[3]/$row[1] . ",";
-      $barValues2 = $barValues2 . $row[4]/$row[1] . ",";
-      $barValues3 = $barValues3 . $row[5]/$row[1] . ",";
-      $barValues4 = $barValues4 . $row[6]/$row[1] . ",";
-      $barValues5 = $barValues5 . $row[7]/$row[1] . ",";
+      if ($lastDate ne $row[0]) {
+        $barDates = $barDates . "'$row[0]'" . ",";
+        $barValues0 = $barValues0 . $row[2]/$row[1] . ",";
+        $barValues1 = $barValues1 . $row[3]/$row[1] . ",";
+        $barValues2 = $barValues2 . $row[4]/$row[1] . ",";
+        $barValues3 = $barValues3 . $row[5]/$row[1] . ",";
+        $barValues4 = $barValues4 . $row[6]/$row[1] . ",";
+        $barValues5 = $barValues5 . $row[7]/$row[1] . ",";
+      }
+      $lastDate = $row[0];
   }
   #Adjust formatting to fit JS variable style
   $barValues0 = "var line0 = {
@@ -164,7 +175,7 @@ if($graphType eq "single"){
   };";
   $barValues2 = "var line2 = {
     x: [$barDates],
-    y: [$barValues3],
+    y: [$barValues2],
     name: '7-25%',
     type: 'bar'
   };";
@@ -186,21 +197,9 @@ if($graphType eq "single"){
     name: '76-100%',
     type: 'bar'
   };";
-}
-
-
-
-
-# tt vars
-my %tt_options = (INCLUDE_PATH => 'tmps', ABSOLUTE => 1, EVAL_PERL => 1);
-my $tt = Template->new(\%tt_options);
-
-
-#Testing Sending javascript variables using templating - Hunter
-my $tt_vars;
-#Sending javascript variables using templating - Hunter
-my $tt_vars = {
-                barTitle => "<script> var layoutBar = {barmode: 'stack', title: '$selectedLoc: $selectedPlant $selectedYear',
+ $graphVariables = "<script> $barValues0 $barValues1 $barValues2 $barValues3 $barValues4 $barValues5 
+                    var dataBar = [line0,line1,line2,line3,line4,line5];</script>";
+ $graphTitle = "<script> var layoutBar = {barmode: 'stack', title: '$selectedLoc: $selectedPlant $selectedYear',
                                       xaxis: {
                                             title: 'Day Of Year',
                                             titlefont: {
@@ -215,12 +214,94 @@ my $tt_vars = {
                                             size: 18,
                                             color: 'grey'
                                           },
-                                          }}; </script>",
+                                          }}; </script>";
+
+}elsif($cgi->param('comparison-choice') eq "compare-plants"){
+  my $selectedPlant1 = $cgi->param('comparison-plant1');
+  my $selectedPlant2 = $cgi->param('comparison-plant2');
+  $sqlString = "SELECT  curDate, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage from Plants
+                INNER JOIN UserEntries ON Plants.plantID = UserEntries.plantID
+                WHERE location='$selectedLocMarker' AND plantType='$selectedPlant1' AND curYear='$selectedYear';";
+  $sth = $dbh->prepare($sqlString);
+  $sth -> execute();
+
+  my $lastDate = '';
+
+  while (my @row = $sth->fetchrow_array()){
+      if ($lastDate ne $row[0]) {
+        $barDates = $barDates . "'$row[0]'" . ",";
+        $barValues0 = $barValues0 . $row[2]/$row[1] . ",";
+      }
+      $lastDate = $row[0];
+  }
+
+  $sqlString = "SELECT  curDate, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage from Plants
+                INNER JOIN UserEntries ON Plants.plantID = UserEntries.plantID
+                WHERE location='$selectedLocMarker' AND plantType='$selectedPlant2' AND curYear='$selectedYear';";
+  $sth = $dbh->prepare($sqlString);
+  $sth -> execute();
+
+  $lastDate = '';
+
+  while (my @row = $sth->fetchrow_array()){
+      if ($lastDate ne $row[0]) {
+        $barDates1 = $barDates1 . "'$row[0]'" . ",";
+        $barValues1 = $barValues1 . $row[2]/$row[1] . ",";
+      }
+      $lastDate = $row[0];
+  }
+
+  $barValues0 = "var line0 = {
+    x: [$barDates],
+    y: [$barValues0],
+    name: '$selectedPlant1',
+    type: 'scatter'
+  };";
+  $barValues1 = "var line1 = {
+    x: [$barDates1],
+    y: [$barValues1],
+    name: '$selectedPlant2',
+    type: 'scatter'
+  };";
+
+  $graphVariables = "<script> $barValues0 $barValues1 var dataBar = [line0,line1];</script>";
+  $graphTitle = "<script> var layoutBar = {title: '$selectedLoc: Compare Plants $selectedYear',
+                                      xaxis: {
+                                            title: 'Day Of Year',
+                                            titlefont: {
+                                            family: 'Arial, sans-serif',
+                                            size: 18,
+                                            color: 'grey'
+                                          },},
+                                       yaxis: {
+                                            title: 'Proportion Of Injured Leaves',
+                                            titlefont: {
+                                            family: 'Arial, sans-serif',
+                                            size: 18,
+                                            color: 'grey'
+                                          },
+                                          }}; </script>";
+
+}
+
+
+
+
+# tt vars
+my %tt_options = (INCLUDE_PATH => 'tmps', ABSOLUTE => 1, EVAL_PERL => 1);
+my $tt = Template->new(\%tt_options);
+
+
+#Testing Sending javascript variables using templating - Hunter
+my $tt_vars;
+#Sending javascript variables using templating - Hunter
+my $tt_vars = {
+                barTitle => $graphTitle,
                 fillPlants => $fillPlants,
                 fillDate => $fillDate,
                 keepLoc => '<input type="hidden" name="MapButton" value= "' . $selectedLoc . '"/>',
                 tester2 => "",
-                barVariables => "<script> $barValues0 $barValues1 $barValues2 $barValues3 $barValues4 $barValues5 </script>",
+                barVariables => $graphVariables,
                 gardenLoc => $selectedLoc,
                 mapMarkers => $locations,
                 fillLoc => $locationsSelect,

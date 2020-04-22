@@ -121,9 +121,9 @@
                                     </select>
                                 </div>
 
-                                <div class="form-group" id="comparison-plant2" style="display: none;" >
+                                <div class="form-group" id="comparison-plant2" style="display: none;">
                                     <label for="comparison-plant2">Plant 2</label>
-                                    <select id="comparison-plant2" name="comparison-plant2" class="form-control">
+                                    <select id="comparison-plant2" name="comparison-plant2" class="form-control" onchange="this.form.submit()">
                                         <option>Plant 2</option>
                                         [% fillPlants %]
                                     </select>
