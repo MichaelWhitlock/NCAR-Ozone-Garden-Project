@@ -33,8 +33,7 @@ my $tt = Template->new(\%tt_options);
 my $tt_vars;
 
 
-
-
+@rows = $sth->fetchrow_array();
 
 # check for an after variable to be set
 if (defined $cgi->param('after')) {
