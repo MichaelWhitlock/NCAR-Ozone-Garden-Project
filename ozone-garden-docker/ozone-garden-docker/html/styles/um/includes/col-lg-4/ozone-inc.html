@@ -3,7 +3,6 @@
     <ul class="cat">
         <li><a href="/">Home</a></li>
         <li><a href="/training.pl">Training</a></li>
-        <li><a href="/gallery.pl">Image Gallery</a></li>
         <li><a href="/data_add.pl">Data Entry</a></li>
         <li><a href="/data_visual.pl">Data Visualization</a></li>
         <li><a href="#ozone-login" data-toggle="modal" data-target="#ozone-modalLogin">Garden Manager Login</a></li>
@@ -24,7 +23,7 @@
             <div class="modal-body">
                 <form class="form-signin" method="POST" action="/ozone_login.pl">
                     <img class="mb-1 img-fluid" src="/Images/logos/logo-ncar-600.png" alt="NCAR Logo">
-                    <p class="my-0 text-cesm mb-1">Garden Managers please log in.</p>
+                    <p class="my-0 text-cesm mb-1 small">Please login using your credentials</p>
 
                     <div class="form-group">
                         <label for="email">Email</label>
@@ -65,7 +64,7 @@
             <div class="modal-body">
                 <form class="form-signin" method="POST" action="ozone_register.pl">
                     <img class="mb-1 img-fluid" src="/Images/logos/logo-ncar-600.png" alt="NCAR Logo">
-                    <p class="my-0 text-cesm mb-1 small">Please fill out the fields below to create an account and enter your site in the ozone garden database.</p>
+                    <p class="my-0 text-cesm mb-1 small">Please fill out the fields to create your account</p>
 
                     <div class="form-group">
                         <label class="mb-0" for="name">Name</label>
@@ -78,32 +77,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="mb-0" for="institution">Institution or Garden Location <small class="text-muted"></small></label>
+                        <label class="mb-0" for="institution">Institution <small class="text-muted">*Not required</small></label>
                         <input name="register_institution" type="text" id="institution" class="form-control" placeholder="...">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="mb-0" for="location">City, State <small class="text-muted"></small></label>
-                        <input name="register_location" type="text" id="location" class="form-control" placeholder="...">
-                    </div>
-
-<!--                     <form name="myWebForm" action="mailto:youremail@email.com" method="post">
- -->                
-                <label class="mb-0" for="plant_type">Plant Types <small class="text-muted">Select All That Apply</small></label>
-                    <div class="checkbox">
-                          <label><input type="checkbox" value="">Coneflower</label>
-                        </div>
-                        <div class="checkbox">
-                          <label><input type="checkbox" value="">Snap Bean</label>
-                        </div>
-                        <div class="checkbox">
-                          <label><input type="checkbox" value="">Milkweed</label>
-                        <div class="checkbox">
-                          <label><input type="checkbox" value="">Potato</label>
-                        </div>
-                        <div class="checkbox">
-                          <label class="mb-0" for="other">Other Other Plant Type<small class="text-muted"></small></label>
-                          <input name="other" type="text" id="otherpt" class="form-control" placeholder="...">  
                     </div>
 
                     <div class="form-group">
