@@ -14,6 +14,7 @@ RUN yum -y install cpanm gcc perl-App-cpanminus perl-Config-Tiny perl-CGI-Sessio
 RUN cpanm Template
 RUN cpanm Time::Piece
 RUN cpanm Text::CSV
+RUN cpanm Math::Random::Secure
 
 #install dbd mysql module
 RUN yum -y install "perl(DBD::mysql)"

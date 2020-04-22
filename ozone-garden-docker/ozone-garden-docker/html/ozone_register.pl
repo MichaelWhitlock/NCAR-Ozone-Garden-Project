@@ -9,8 +9,11 @@ use CGI qw(:standard);
 use CGI::Session qw/-ip-match/;
 use DBI;
 use Text::CSV;
+use Math::Random::Secure qw(rand);
 
 
+# uncomment line below to send debug messages to the browser, comment back when ready for production
+use CGI::Carp qw( warningsToBrowser fatalsToBrowser );
 
 # set the time vars
 my $now = localtime;
