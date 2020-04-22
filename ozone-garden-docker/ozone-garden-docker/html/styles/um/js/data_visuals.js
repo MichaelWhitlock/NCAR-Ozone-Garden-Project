@@ -2,9 +2,25 @@
 function singleOrComparison() {
     if (document.getElementById("single").selected) {
         document.getElementById("plant-type-group").style.display = "block";
+        document.getElementById("comparison-choice-group").style.display = "none";
+        document.getElementById("comparison-plant1").style.display = "none";
+        document.getElementById("comparison-plant2").style.display = "none";
+        document.getElementById("comparison-year1").style.display = "none";
+        document.getElementById("comparison-year2").style.display = "none";
     } else {
-        document.getElementById("plant-type-group").style.display = "none";
-        document.getElementById("year-select-group").style.display = "none";
+        if (document.getElementById("comparison").selected) {
+            document.getElementById("comparison-choice-group").style.display = "block";
+            document.getElementById("plant-type-group").style.display = "none";
+            document.getElementById("year-select-group").style.display = "none";
+        } else {
+            document.getElementById("plant-type-group").style.display = "none";
+            document.getElementById("year-select-group").style.display = "none";
+            document.getElementById("comparison-choice-group").style.display = "none";
+            document.getElementById("comparison-plant1").style.display = "none";
+            document.getElementById("comparison-plant2").style.display = "none";
+            document.getElementById("comparison-year1").style.display = "none";
+            document.getElementById("comparison-year2").style.display = "none";
+        }
     }
 }
 window.onload = singleOrComparison();
@@ -19,13 +35,37 @@ function plantCheck() {
     }
 }
 window.onload = plantCheck();
-var graphType = document.getElementById('plant-type');
-graphType.addEventListener('change', plantCheck ,false);
+var plantType = document.getElementById('plant-type');
+plantType.addEventListener('change', plantCheck ,false);
+
+function comparisonCheck() {
+    if (document.getElementById("select-comparison").selected) {
+        document.getElementById("comparison-plant1").style.display = "none";
+        document.getElementById("comparison-plant2").style.display = "none";
+        document.getElementById("comparison-year1").style.display = "none";
+        document.getElementById("comparison-year2").style.display = "none";
+    }
+    if(document.getElementById("compare-years").selected){
+        document.getElementById("comparison-plant1").style.display = "none";
+        document.getElementById("comparison-plant2").style.display = "none";
+        document.getElementById("comparison-year1").style.display = "block";
+        document.getElementById("comparison-year2").style.display = "block";
+    }
+    if(document.getElementById("compare-plants").selected){
+        document.getElementById("comparison-plant1").style.display = "block";
+        document.getElementById("comparison-plant2").style.display = "block";
+        document.getElementById("comparison-year1").style.display = "none";
+        document.getElementById("comparison-year2").style.display = "none";
+    }
+}
+window.onload = comparisonCheck();
+var comparisonType = document.getElementById('comparison-choice');
+comparisonType.addEventListener('change', comparisonCheck ,false);
 
 
 
 //TESTER = document.getElementById('tester');
-TESTER2 = document.getElementById('tester3');
+//TESTER2 = document.getElementById('tester3');
 
 //var line1 = {
 //x: [140, 200, 220, 240],
@@ -64,6 +104,6 @@ var dataBar = [line0,line1,line2,line3,line4,line5];
 
 
 //Plotly.newPlot('tester', data, layout, {displayModeBar: false});
-Plotly.newPlot('tester3', dataBar, layoutBar, {displayModeBar: false});
+Plotly.newPlot('bar-div', dataBar, layoutBar, {displayModeBar: false});
 
 
