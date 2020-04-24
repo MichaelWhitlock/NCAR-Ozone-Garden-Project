@@ -9,8 +9,8 @@ use CGI qw(:standard);
 use CGI::Session qw/-ip-match/;
 use DBI;
 use Text::CSV;
-use Math::Random::Secure qw(rand);
-
+use Data::Entropy::Algorithms qw(rand_bits);
+use Digest;
 
 # uncomment line below to send debug messages to the browser, comment back when ready for production
 use CGI::Carp qw( warningsToBrowser fatalsToBrowser );
@@ -64,6 +64,10 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'register') {
 	$tt_vars->{'email'} = $cgi->param('register_email');
 	$tt_vars->{'institution'} = $cgi->param('register_institution');
 
+	my $salt = rand_bits(16*8);
+	my $bcrypt = Digest->new('Bcrypt', cost => 12, salt => $salt);
+	my $digest = $bcrypt->digest;
+
 
 
 	# untaint the vars by matching against a regex of allowed characters
@@ -92,7 +96,7 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'register') {
 	}
 	else {
 		# add error msg
-		$tt_vars->{'msg_err'} = "Error with email field, please try again";
+		$tt_vars->{'msg_err'} = $digest;
 
 		# data is bad so end
 		&showForm();
@@ -112,11 +116,14 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'register') {
 		# data is bad so end
 		&showForm();
 	}
+
 	# check the password parameter
 	if ( $cgi->param('password') =~ /(.+)/) {
 		# data is good so set it
 		$password = $1;
+		
 	}
+
 	else {
 		# data is bad so end
 		&showForm();
