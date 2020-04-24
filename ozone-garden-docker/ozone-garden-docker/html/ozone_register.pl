@@ -161,7 +161,7 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'register') {
 		# make a salt
 		my $salt = rand_bits(16*8);
 		my $bcrypt = Digest->new('Bcrypt', cost => 12, salt => $salt);
-		# $bcrypt->add($password);
+		$bcrypt->add($password);
 		my $digest = $bcrypt->digest;
 
 		#Insert new user into UserTable -- dummy value for locationid right now

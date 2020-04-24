@@ -10,6 +10,8 @@ use CGI::Session qw/-ip-match/;
 use DBI;
 use Text::CSV;
 
+use Digest;
+use CGI::Carp qw( warningsToBrowser fatalsToBrowser );
 
 
 # set the time vars
@@ -54,8 +56,40 @@ $tt_vars->{'after'} = $after;
 if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'login') {
 	# TODO validate user
 	# push into the vars to return
-	$tt_vars->{'msg'} = "Login User";
-	$tt_vars->{'email'} = $cgi->param('login_email');
+	#
+	my $email = param('email');
+	my $password = param('password');
+
+
+	my $data_source = "DBI:mysql:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:database=TannerTester";
+	my $username = "admin";
+	my $auth = "greenteam";
+	my $dbh = DBI->connect($data_source, $username, $auth,
+	          {RaiseError => 1} );
+	my $sth = $dbh->prepare("SELECT count(email), salt FROM UserTable WHERE email='$email';");
+	$sth -> execute();
+	my @row = $sth->fetchrow_array();
+	my $testEmail = $row[0];
+
+	if($testEmail == 0){
+		$tt_vars->{'msg'} = "Email doesn't exist. Register now if you are a garden manager.";
+		&showForm();
+	}else{
+		my $salt = $row[1];
+		my $bcrypt = Digest->new('Bcrypt', cost => 12, salt => $salt);
+		$bcrypt->add($password);
+		my $digest = $bcrypt->digest;
+
+		#my $sth = $dbh->prepare("SELECT UserID FROM UserTable WHERE email='$email' AND password='$digest';");
+		#$sth -> execute();
+		#my @row = $sth->fetchrow_array();
+		#my $userID = $row[0];
+		$tt_vars->{'msg'} = "Here";
+		&showForm();
+	}
+
+
+	$tt_vars->{'msg'} = "";
 
 	&showForm();
 
