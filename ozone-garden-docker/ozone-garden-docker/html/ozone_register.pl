@@ -159,21 +159,21 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'register') {
 	# check to make sure that the email doesn't exist
 	if($testEmail == 0){
 		# make a salt
-		# my $salt = rand_bits(16*8);
-		# my $bcrypt = Digest->new('Bcrypt', cost => 12, salt => $salt);
-		# # $bcrypt->add($password);
-		# my $digest = $bcrypt->digest;
+		my $salt = rand_bits(16*8);
+		my $bcrypt = Digest->new('Bcrypt', cost => 12, salt => $salt);
+		# $bcrypt->add($password);
+		my $digest = $bcrypt->digest;
 
-		# #Insert new user into UserTable -- dummy value for locationid right now
-  #       my $insertIntoUserTable = "INSERT INTO UserTable(email, name, institution, password, salt, loctionid) VALUES ('$email', '$name','$institution', '$digest', '$salt', 24);";
-  #       eval {$dbh->do($insertIntoUserTable)};
-  #       $sth = $dbh->prepare("SELECT userID FROM UserTable WHERE email = '$email';");
-  #       $sth->execute();
-  #       @row = $sth->fetchrow_array();
-  #       my $email1 = $row[0];
-    	$tt_vars->{'msg_err'} = "in if";
+		#Insert new user into UserTable -- dummy value for locationid right now
+        my $insertIntoUserTable = "INSERT INTO UserTable(email, name, institution, password, salt, locationID) VALUES ('$email', '$name','$institution', '$digest', '$salt', 24);";
+        eval {$dbh->do($insertIntoUserTable)};
+        $sth = $dbh->prepare("SELECT userID FROM UserTable WHERE email='$email';");
+        $sth->execute();
+        @row = $sth->fetchrow_array();
+        my $uid = $row[0];
+    	$tt_vars->{'msg_err'} = "Garden manager user created. Awaiting location approval.";
 
-		# &showForm();
+		&showForm();
 	}
 	else {
 		$tt_vars->{'msg_err'} = "Email is already in use";
