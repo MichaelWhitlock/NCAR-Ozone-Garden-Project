@@ -64,10 +64,6 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'register') {
 	$tt_vars->{'email'} = $cgi->param('register_email');
 	$tt_vars->{'institution'} = $cgi->param('register_institution');
 
-	my $salt = rand_bits(16*8);
-	my $bcrypt = Digest->new('Bcrypt', cost => 12, salt => $salt);
-	my $digest = $bcrypt->digest;
-
 
 
 	# untaint the vars by matching against a regex of allowed characters
@@ -96,7 +92,7 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'register') {
 	}
 	else {
 		# add error msg
-		$tt_vars->{'msg_err'} = $digest;
+		$tt_vars->{'msg_err'} = "Invalid email address";
 
 		# data is bad so end
 		&showForm();
@@ -141,23 +137,51 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'register') {
 
 
 	# compare the passwords
-	if ( "$password" eq "$password2" ) {
-		# passwords match so register user
-		# encrypt the password
-		my $encPassword = &encryptPassword($password);
-
-		# TODO
-		# check DB for email already in and insert new user
-		$tt_vars->{'msg_err'} = "Register User";
-		&showForm();
-	}
-	else {
+	if ( "$password" ne "$password2" ) {
 		# passwords dont match so return with error
 		$tt_vars->{'msg_err'} = "Passwords do not match, please try again";
 
 		# data is bad so end
 		&showForm();
 	}
+
+	#Database connection for inserting into usertable
+	my $data_source = "DBI:mysql:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:database=TannerTester";
+	my $username = "admin";
+	my $auth = "greenteam";
+	my $dbh = DBI->connect($data_source, $username, $auth,
+	          {RaiseError => 1} );
+	my $sth = $dbh->prepare("SELECT count(email) FROM UserTable WHERE email='$email';");
+	$sth -> execute();
+	my @row = $sth->fetchrow_array();
+	my $testEmail = $row[0];
+
+	# check to make sure that the email doesn't exist
+	if($testEmail == 0){
+		# make a salt
+		# my $salt = rand_bits(16*8);
+		# my $bcrypt = Digest->new('Bcrypt', cost => 12, salt => $salt);
+		# # $bcrypt->add($password);
+		# my $digest = $bcrypt->digest;
+
+		# #Insert new user into UserTable -- dummy value for locationid right now
+  #       my $insertIntoUserTable = "INSERT INTO UserTable(email, name, institution, password, salt, loctionid) VALUES ('$email', '$name','$institution', '$digest', '$salt', 24);";
+  #       eval {$dbh->do($insertIntoUserTable)};
+  #       $sth = $dbh->prepare("SELECT userID FROM UserTable WHERE email = '$email';");
+  #       $sth->execute();
+  #       @row = $sth->fetchrow_array();
+  #       my $email1 = $row[0];
+    	$tt_vars->{'msg_err'} = "in if";
+
+		# &showForm();
+	}
+	else {
+		$tt_vars->{'msg_err'} = "Email is already in use";
+
+		# data is bad so end
+		&showForm();
+	}
+
 }
 # no form submit so show register page
 else {
