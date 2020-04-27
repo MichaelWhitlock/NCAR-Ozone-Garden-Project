@@ -112,19 +112,19 @@ class Quiz extends React.Component {
 
                 {this.state.response}
 
-                <div class="row">
+                <div className="row">
 
-                    <div class="col-lg-6">
+                    <div className="col-lg-6">
                         <button id="yes" type="button" className="btn btn-primary btn-block" name="yes" onClick={this.checkYes}>YES</button>
                     </div>
 
-                    <div class="col-lg-6">
+                    <div className="col-lg-6">
                         <button id="no" type="button" className="btn btn-primary btn-block" name="no" onClick={this.checkNo}>NO</button>
                     </div>
 
                     <br />
 
-                    <div class="col-lg-12 nextButton">
+                    <div className="col-lg-12 nextButton">
                         <button id="next_question" type="button" className="btn btn-primary btn-block" onClick={this.nextQuestion}>Next Question</button>
                     </div>
                 </div>
