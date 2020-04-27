@@ -105,55 +105,29 @@ class Quiz extends React.Component {
 
     render() {
         return(
+            <div>
+                <img id="displayed_leaf" src={`${this.state.file}`} alt="A test image pay no mind" class="img-fluid" />
+                <br />
+                <br />
 
-            <div className="row">
-                <div className="col-lg-8">
-                    <div className = "bg-light p-4 border rounded">
-                        <h5 className="text-center">Is This Ozone Damage?</h5>
-                        <br />
-                        <h5>To summarize, ozone injury:</h5>
+                {this.state.response}
 
-                        <ul>
+                <div class="row">
 
-                            <li>Typically occurs on the top surface of the leaf</li>
+                    <div class="col-lg-6">
+                        <button id="yes" type="button" className="btn btn-primary btn-block" name="yes" onClick={this.checkYes}>YES</button>
+                    </div>
 
-                            <li>Starts as stipple, but can progress to yellowing and patches of tissue death</li>
+                    <div class="col-lg-6">
+                        <button id="no" type="button" className="btn btn-primary btn-block" name="no" onClick={this.checkNo}>NO</button>
+                    </div>
 
-                            <li>Only occurs between the leaf veins</li>
+                    <br />
 
-                            <li>Accumulates through time</li>
-
-                            <li>Affects older leaves</li>
-
-                        </ul>
-
-                        <br />
-                        <img id="displayed_leaf" src={`${this.state.file}`} alt="A test image pay no mind" className="img-fluid" />
-                        <br />
-                        <br />
-
-                        {this.state.response}
-
-                        <div className="row">
-
-                            <div className="col-lg-6">
-                                <button id="yes" type="button" className="btn btn-primary btn-block" name="yes" onClick={this.checkYes}>YES</button>
-                            </div>
-
-                            <div className="col-lg-6">
-                                <button id="no" type="button" className="btn btn-primary btn-block" name="no" onClick={this.checkNo}>NO</button>
-                            </div>
-
-                            <br />
-
-                            <div className="col-lg-12 nextButton">
-                                <button id="next_question" type="button" className="btn btn-primary btn-block" onClick={this.nextQuestion}>Next Question</button>
-                            </div>
-                        </div>
+                    <div class="col-lg-12 nextButton">
+                        <button id="next_question" type="button" className="btn btn-primary btn-block" onClick={this.nextQuestion}>Next Question</button>
                     </div>
                 </div>
-
-                <div className="col-lg-3"></div>
             </div>
         );
     }
