@@ -112,7 +112,7 @@
 
                 <div class="col-lg-8">
 
-                    <div class="post-image">
+                    <div class="post-image post-border-bottom">
 
                             <div class="post-heading">
 
@@ -120,46 +120,63 @@
 
                             </div>
 
+                            <p>View large image galleries featuring examples of leaves with no damage, ozone damage, and other non-ozone damage.</p>
+
                         </div>
 
                     <div class="post-border-bottom">
-                        
-                        <h7>Below are large image galleries featuring leaves with no damage, ozone damage, and other (non-ozone) damage.</h7>
+
+                        <h4 style="text-align:center; padding-bottom:10px;">Jump To A Section</h4>
+
+                        <div class="row">
+                            <div class="col-sm">
+                                <button type="button" class="btn btn-primary btn-block" style="margin-bottom:10px;" onclick="location.href='/gallery.pl#ozone_section'">
+                                    Ozone
+                                </button>
+                            </div>
+                            <div class="col-sm">
+                                <button type="button" class="btn btn-primary btn-block" style="margin-bottom:10px;" onclick="location.href='/gallery.pl#other_section'">Other Damage</button>
+                            </div>
+                            <div class="col-sm">
+                                <button type="button" class="btn btn-primary btn-block" style="margin-bottom:10px;" onclick="location.href='/gallery.pl#noinjury_section'">No Injury</button>
+                            </div>
+                        </div>
 
                     </div>
 
-
-
-
                     <!-- OZONE SECTION -->
+                    <h5 id="ozone_section" style="text-align:center;">Ozone Damage</h5>
 
-                    <h5>Ozone Damage</h5>
+                    <div style="text-align:center; margin-bottom:20px;">
+                        <i>Click images to expand</i>
+                    </div>
 
                     <!-- Gallery -->
                     <!-- https://css-tricks.com/creating-a-modal-image-gallery-with-bootstrap-components/ -->
-                    <div class="row" id="gallery" data-toggle="modal" data-target="#ozoneModal">
-                        <div class="col-12 col-sm-6 col-lg-3">
+                    
+                    <div class="row gallery" data-toggle="modal" data-target="#ozoneModal">
+                        <div class="col-12 col-sm-3 col-lg-3 col-xs-3 image_row">
                             <img class="w-100" src="/Images/ozone/leaf0.jpg" data-target="#ozoneCarousel" data-slide-to="0">
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-3 col-lg-3 col-xs-3 image_row">
                             <img class="w-100" src="/Images/ozone/leaf1.jpg" data-target="#ozoneCarousel" data-slide-to="1">
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-3 col-lg-3 col-xs-3 image_row">
                             <img class="w-100" src="/Images/ozone/leaf2.jpg" data-target="#ozoneCarousel" data-slide-to="2">
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-3 col-lg-3 col-xs-3 image_row">
                             <img class="w-100" src="/Images/ozone/leaf3.jpg" data-target="#ozoneCarousel" data-slide-to="3">
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-3 col-lg-3 col-xs-3 image_row">
                             <img class="w-100" src="/Images/ozone/leaf4.jpg" data-target="#ozoneCarousel" data-slide-to="4">
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-3 col-lg-3 col-xs-3 image_row">
                             <img class="w-100" src="/Images/ozone/leaf5.jpg" data-target="#ozoneCarousel" data-slide-to="5">
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-3 col-lg-3 col-xs-3 image_row">
                             <img class="w-100" src="/Images/ozone/leaf6.jpg" data-target="#ozoneCarousel" data-slide-to="6">
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-3 col-lg-3 col-xs-3 image_row">
                             <img class="w-100" src="/Images/ozone/leaf7.jpg" data-target="#ozoneCarousel" data-slide-to="7">
                         </div>
                     </div>
@@ -232,33 +249,37 @@
 
                     <!-- OTHER INJURY SECTION -->
 
-                    <h5 class="margin_above">Other Injury</h5>
+                    <h5 class="margin_above" id="other_section" style="text-align:center;">Other Injury</h5>
+
+                    <div style="text-align:center; margin-bottom:20px;">
+                        <i>Click images to expand</i>
+                    </div>
 
                     <!-- Gallery -->
                     <!-- https://css-tricks.com/creating-a-modal-image-gallery-with-bootstrap-components/ -->
-                    <div class="row" id="gallery" data-toggle="modal" data-target="#otherModal">
-                        <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="row gallery" data-toggle="modal" data-target="#otherModal">
+                        <div class="col-12 col-sm-6 col-lg-3 image_row">
                             <img class="w-100" src="/Images/other/leaf0.jpg" data-target="#otherCarousel" data-slide-to="0">
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-6 col-lg-3 image_row">
                             <img class="w-100" src="/Images/other/leaf1.jpg" data-target="#otherCarousel" data-slide-to="1">
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-6 col-lg-3 image_row">
                             <img class="w-100" src="/Images/other/leaf2.jpg" data-target="#otherCarousel" data-slide-to="2">
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-6 col-lg-3 image_row">
                             <img class="w-100" src="/Images/other/leaf3.jpg" data-target="#otherCarousel" data-slide-to="3">
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-6 col-lg-3 image_row">
                             <img class="w-100" src="/Images/other/leaf4.jpg" data-target="#otherCarousel" data-slide-to="4">
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-6 col-lg-3 image_row">
                             <img class="w-100" src="/Images/other/leaf5.jpg" data-target="#otherCarousel" data-slide-to="5">
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-6 col-lg-3 image_row">
                             <img class="w-100" src="/Images/other/leaf6.jpg" data-target="#otherCarousel" data-slide-to="6">
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-6 col-lg-3 image_row">
                             <img class="w-100" src="/Images/other/leaf7.jpg" data-target="#otherCarousel" data-slide-to="7">
                         </div>
                     </div>
@@ -332,33 +353,37 @@
 
                     <!-- NO INJURY SECTION -->
 
-                    <h5 class="margin_above">No Injury</h5>
+                    <h5 class="margin_above" id="noinjury_section" style="text-align:center;">No Injury</h5>
+
+                    <div style="text-align:center; margin-bottom:20px;">
+                        <i>Click images to expand</i>
+                    </div>
 
                     <!-- Gallery -->
                     <!-- https://css-tricks.com/creating-a-modal-image-gallery-with-bootstrap-components/ -->
-                    <div class="row" id="gallery" data-toggle="modal" data-target="#noinjuryModal">
-                        <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="row gallery" data-toggle="modal" data-target="#noinjuryModal">
+                        <div class="col-12 col-sm-6 col-lg-3 image_row">
                             <img class="w-100" src="/Images/noinjury/leaf0.jpg" data-target="#noinjuryCarousel" data-slide-to="0">
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-6 col-lg-3 image_row">
                             <img class="w-100" src="/Images/noinjury/leaf1.jpg" data-target="#noinjuryCarousel" data-slide-to="1">
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-6 col-lg-3 image_row">
                             <img class="w-100" src="/Images/noinjury/leaf2.jpg" data-target="#noinjuryCarousel" data-slide-to="2">
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-6 col-lg-3 image_row">
                             <img class="w-100" src="/Images/noinjury/leaf3.jpg" data-target="#noinjuryCarousel" data-slide-to="3">
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-6 col-lg-3 image_row">
                             <img class="w-100" src="/Images/noinjury/leaf4.jpg" data-target="#noinjuryCarousel" data-slide-to="4">
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-6 col-lg-3 image_row">
                             <img class="w-100" src="/Images/noinjury/leaf5.jpg" data-target="#noinjuryCarousel" data-slide-to="5">
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-6 col-lg-3 image_row">
                             <img class="w-100" src="/Images/noinjury/leaf6.jpg" data-target="#noinjuryCarousel" data-slide-to="6">
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="col-12 col-sm-6 col-lg-3 image_row">
                             <img class="w-100" src="/Images/noinjury/leaf7.jpg" data-target="#noinjuryCarousel" data-slide-to="7">
                         </div>
                     </div>
