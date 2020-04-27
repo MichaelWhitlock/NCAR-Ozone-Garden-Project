@@ -140,7 +140,7 @@
 
                                 <div class="form-group" id="comparison-year2" style="display: none;" >
                                     <label for="comparison-year2">Year 2</label>
-                                    <select id="comparison-year2" name="comparison-year2" class="form-control">
+                                    <select id="comparison-year2" name="comparison-year2" class="form-control" onchange="this.form.submit()">
                                         <option>Year 2</option>
                                         [% fillDate %]
                                     </select>
@@ -158,7 +158,7 @@
 
                                 <div class="form-group" id="comparison-location2" style="display: none;" >
                                     <label for="comparison-location2">Location 2</label>
-                                    <select id="comparison-location2" name="comparison-location2" class="form-control">
+                                    <select id="comparison-location2" name="comparison-location2" class="form-control" onchange="this.form.submit()">
                                         <option>location 2</option>
                                         [% fillLoc %]
                                     </select>

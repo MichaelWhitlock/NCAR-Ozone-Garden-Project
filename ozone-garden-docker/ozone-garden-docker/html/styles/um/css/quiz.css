@@ -11,3 +11,10 @@
 .nextButton {
 	margin-top: 5px;
 }
+
+#displayed_leaf {
+	display:block;
+	margin-left: auto;
+	margin-right:auto;
+	width:50%;
+}
