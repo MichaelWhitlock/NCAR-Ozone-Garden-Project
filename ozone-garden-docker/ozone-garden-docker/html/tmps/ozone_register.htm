@@ -18,7 +18,7 @@
 <body class="body-signin">
     <form class="form-signin" method="POST" action="ozone_register.pl">
         <!--img class="mb-4 img-fluid" src="/Images/logos/logo-ncar-600.png" alt="NCAR Logo"-->
-        <h3>Ozone Garden Register</h3>
+        <h3>Register your ozone garden</h3>
         <p class="my-0 text-cesm mb-1 small">Please fill out the fields below to create an account and enter your site in the ozone garden database.</p>
 
         [% IF msg_err %]
@@ -43,7 +43,7 @@
         </div>
 
         <div class="form-group">
-            <label class="mb-0" for="location">City, State <small class="text-muted"></small></label>
+            <label class="mb-0" for="location">Street address of garden location<small class="text-muted"></small></label>
             <input name="location" type="text" id="location" class="form-control" placeholder="..." [% IF institution %] value="[% institution %]" [% END %]>
         </div>
 
@@ -51,7 +51,7 @@
             <label class="mb-0" for="plant_type">Plant Types <small class="text-muted"></small></label>
             <input name="plant_type" type="text" id="plant_type" class="form-control" placeholder="..." [% IF institution %] value="[% institution %]" [% END %]>
         </div> -->
-        <label class="mb-0" for="plant_type">Plant Types <small class="text-muted">Select All That Apply</small></label>
+        <!-- <label class="mb-0" for="plant_type">Plant Types <small class="text-muted">Select All That Apply</small></label>
                     <div class="checkbox">
                           <label><input type="checkbox" value="">Coneflower</label>
                         </div>
@@ -66,7 +66,7 @@
                         <div class="checkbox">
                           <labelclass="mb-0" for="other">Other Plant Type<small class="text-muted"></small></label>
                           <input name="other" type="text" id="otherpt" class="form-control" placeholder="...">  
-                    </div>
+                    </div> -->
 
         <div class="form-group">
             <label class="mb-0" for="password">Password</label>
