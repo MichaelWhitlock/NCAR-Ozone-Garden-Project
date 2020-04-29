@@ -159,7 +159,8 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'register') {
 	# check to make sure that the email doesn't exist
 	if($testEmail == 0){
 		# make a salt
-		my $salt = rand_bits(16*8);
+		my $bs = rand_bits(16*8);
+		my $salt = "". $bs;
 		my $bcrypt = Digest->new('Bcrypt', cost => 12, salt => $salt);
 		$bcrypt->add($password);
 		my $digest = $bcrypt->digest;

@@ -75,16 +75,37 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'login') {
 		$tt_vars->{'msg'} = "Email doesn't exist. Register now if you are a garden manager.";
 		&showForm();
 	}else{
-		my $salt = $row[1];
+		my $salt = $row[1];#Here
 		my $bcrypt = Digest->new('Bcrypt', cost => 12, salt => $salt);
 		$bcrypt->add($password);
 		my $digest = $bcrypt->digest;
 
-		#my $sth = $dbh->prepare("SELECT UserID FROM UserTable WHERE email='$email' AND password='$digest';");
-		#$sth -> execute();
-		#my @row = $sth->fetchrow_array();
-		#my $userID = $row[0];
-		$tt_vars->{'msg'} = "Here";
+		my $sth = $dbh->prepare("SELECT count(UserID), UserID, name FROM UserTable WHERE email='$email' AND password='$digest';");
+		$sth -> execute();
+		my @row = $sth->fetchrow_array();
+
+		my $passwordValidation = $row[0];
+
+		#Password validation
+		if($passwordValidation == 0){
+			$tt_vars->{'msg'} = "This password not associated with username.";
+			&showForm();
+		}
+		else{#Database grabbing the userID
+			my $userID = $row[1];
+			my $name = $row[2];
+			$tt_vars->{'msg'} = "Hello ". $name;
+
+			my $userID_cookie = cookie( -NAME    => 'entry_cookie',
+	                    -VALUE   => $userID,
+	                    -EXPIRES => '+100m');    # M for month, m for minute
+
+			my $data_entry_url = "http://localhost/data_add.pl";
+
+			print redirect( -URL     => $data_entry_url,
+	                        -COOKIE  => $userID_cookie);
+		}
+			
 		&showForm();
 	}
 
