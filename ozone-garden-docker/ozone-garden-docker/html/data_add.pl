@@ -122,6 +122,7 @@ my $insertIntoPLantTable;
 my $tt_vars = {
         mapMarkers => $locations,
         locationsSelect => $locationsSelect,
+        username => $name,
 };
 
 
