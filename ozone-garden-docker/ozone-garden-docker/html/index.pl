@@ -30,7 +30,7 @@ my $username = "admin";
 my $auth = "greenteam";
 my $dbh = DBI->connect($data_source, $username, $auth,
           {RaiseError => 1} );
-my $sth = $dbh->prepare("SELECT Latitude,Longitude,MarkerLabel,GardenName FROM GardenLocations");
+my $sth = $dbh->prepare("SELECT Latitude,Longitude,MarkerLabel,GardenName FROM GardenLocations WHERE Status = 1");
 $sth -> execute();
 
 #using db info to create map markers with popups

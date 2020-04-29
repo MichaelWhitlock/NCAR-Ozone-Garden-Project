@@ -68,7 +68,8 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'register') {
 
 	# untaint the vars by matching against a regex of allowed characters
 	# check the name parameter
-	if ( $cgi->param('name') =~ /(^[a-zA-Z0-9]+$)/) {
+
+	if ( $cgi->param('name') =~ /(^[a-zA-Z0-9\s]+$)/) {
 		# data is good so set it
 		$name = $1;
 
@@ -144,6 +145,35 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'register') {
 		# data is bad so end
 		&showForm();
 	}
+
+
+#Location 
+	#=1600+Amphitheatre+Parkway,+Mountain+View,+CA
+	#StreetAddreess+,City,STATE
+	#Replace all spaces with +
+	
+	# my $streetAddreess = $cgi->param('street');
+	# my $cityState = $cgi->param('cityState');
+	# my $fullAddress = $streetAddreess . ',' . $cityState;
+	
+	#Replace all spaces with +
+	# $fullAddress =~ tr/''/+;
+
+	#  my $geocodeapi = "https://maps.googleapis.com/maps/api/geocode/";
+
+	#   my $url = $geocodeapi . $format . "?sensor=false&address=" . $address;
+
+	#   my $json = get($url);
+
+	#   my $d_json = decode_json( $json );
+
+	#   my $lat = $d_json->{results}->[0]->{geometry}->{location}->{lat};
+	#   my $lng = $d_json->{results}->[0]->{geometry}->{location}->{lng};
+
+	# Psuedo code check for valid address
+	# if lat && lng are error or invalid tt_Vars ="Invalid address"
+
+
 
 	#Database connection for inserting into usertable
 	my $data_source = "DBI:mysql:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:database=TannerTester";

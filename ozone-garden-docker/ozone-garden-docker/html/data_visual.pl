@@ -73,7 +73,7 @@ if ($selectedYear eq ""){
 
 
 #This code is stolen from main page map, it uses info from database to fill in garden location markers for the map
-my $sth = $dbh->prepare("SELECT Latitude,Longitude,MarkerLabel,GardenName FROM GardenLocations");
+my $sth = $dbh->prepare("SELECT Latitude,Longitude,MarkerLabel,GardenName FROM GardenLocations WHERE Status = 1");
 $sth -> execute();
 #using db info to create map markers with popups
 my $locations = "<script type='text/javascript'>";

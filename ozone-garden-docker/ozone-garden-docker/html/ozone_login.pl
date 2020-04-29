@@ -96,7 +96,7 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'login') {
 			my $name = $row[2];
 			$tt_vars->{'msg'} = "Hello ". $name;
 
-			my $userID_cookie = cookie( -NAME    => 'entry_cookie',
+			my $userID_cookie = cookie( -NAME    => 'userID_cookie',
 	                    -VALUE   => $userID,
 	                    -EXPIRES => '+100m');    # M for month, m for minute
 
