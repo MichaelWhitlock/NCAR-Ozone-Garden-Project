@@ -126,6 +126,7 @@ while (my @row = $sth->fetchrow_array()){
     $fillPlants = $fillPlants . "<option id='$row[0]' value='$row[0]'>$row[0]</option>";
 }
 
+#since there are 5 options for amount of damage on a leaf we need 5 variables to store traces for the bar graph, bardates and bardates1 set the range for x axis
   my $barDates = "";
   my $barDates1 = "";
   my $barValues0 = "";
@@ -199,6 +200,7 @@ if($graphType eq "single"){
   };";
  $graphVariables = "<script> $barValues0 $barValues1 $barValues2 $barValues3 $barValues4 $barValues5 
                     var dataBar = [line0,line1,line2,line3,line4,line5];</script>";
+#formatting for the title and axis for bar graph, passed through tt  vars as with script tags
  $graphTitle = "<script> var layoutBar = {barmode: 'stack', title: '$selectedLoc: $selectedPlant $selectedYear',
                                       xaxis: {
                                             title: 'Day Of Year',
@@ -216,6 +218,8 @@ if($graphType eq "single"){
                                           },
                                           }}; </script>";
 
+#the next three else if statements check for which comparison choice was selected and build graph variables accordingly
+#If compare plants
 }elsif($cgi->param('comparison-choice') eq "compare-plants"){
   my $selectedPlant1 = $cgi->param('comparison-plant1');
   my $selectedPlant2 = $cgi->param('comparison-plant2');
@@ -230,7 +234,7 @@ if($graphType eq "single"){
   while (my @row = $sth->fetchrow_array()){
       if ($lastDate ne $row[0]) {
         $barDates = $barDates . "'$row[0]'" . ",";
-        $barValues0 = $barValues0 . $row[2]/$row[1] . ",";
+        $barValues0 = $barValues0 . "1-$row[2]/$row[1]" . ",";
       }
       $lastDate = $row[0];
   }
@@ -246,7 +250,7 @@ if($graphType eq "single"){
   while (my @row = $sth->fetchrow_array()){
       if ($lastDate ne $row[0]) {
         $barDates1 = $barDates1 . "'$row[0]'" . ",";
-        $barValues1 = $barValues1 . $row[2]/$row[1] . ",";
+        $barValues1 = $barValues1 . "1-$row[2]/$row[1]" . ",";
       }
       $lastDate = $row[0];
   }
@@ -278,7 +282,143 @@ if($graphType eq "single"){
                                             titlefont: {
                                             family: 'Arial, sans-serif',
                                             size: 18,
+                                            color: 'grey',
+                                            range: [0,1]
+                                          },
+                                          }}; </script>";
+
+#if compare locations
+}elsif($cgi->param('comparison-choice') eq "compare-locations"){
+  my $selectedLocation1 = $cgi->param('comparison-location1');
+  my $selectedLocation2 = $cgi->param('comparison-location2');
+  $sqlString = "SELECT  curDate, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage from Plants
+                INNER JOIN UserEntries ON Plants.plantID = UserEntries.plantID
+                WHERE location='$selectedLocation1' AND curYear='$selectedYear';";
+  $sth = $dbh->prepare($sqlString);
+  $sth -> execute();
+
+  my $lastDate = '';
+
+  while (my @row = $sth->fetchrow_array()){
+      if ($lastDate ne $row[0]) {
+        $barDates = $barDates . "'$row[0]'" . ",";
+        $barValues0 = $barValues0 . "1-$row[2]/$row[1]" . ",";
+      }
+      $lastDate = $row[0];
+  }
+
+  $sqlString = "SELECT  curDate, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage from Plants
+                INNER JOIN UserEntries ON Plants.plantID = UserEntries.plantID
+                WHERE location='$selectedLocation2' AND curYear='$selectedYear';";
+  $sth = $dbh->prepare($sqlString);
+  $sth -> execute();
+
+  $lastDate = '';
+
+  while (my @row = $sth->fetchrow_array()){
+      if ($lastDate ne $row[0]) {
+        $barDates1 = $barDates1 . "'$row[0]'" . ",";
+        $barValues1 = $barValues1 . "1-$row[2]/$row[1]" . ",";
+      }
+      $lastDate = $row[0];
+  }
+
+  $barValues0 = "var line0 = {
+    x: [$barDates],
+    y: [$barValues0],
+    name: '$selectedLocation1',
+    type: 'scatter'
+  };";
+  $barValues1 = "var line1 = {
+    x: [$barDates1],
+    y: [$barValues1],
+    name: '$selectedLocation2',
+    type: 'scatter'
+  };";
+
+  $graphVariables = "<script> $barValues0 $barValues1 var dataBar = [line0,line1];</script>";
+  $graphTitle = "<script> var layoutBar = {title: 'Compare Locations $selectedYear',
+                                      xaxis: {
+                                            title: 'Day Of Year',
+                                            titlefont: {
+                                            family: 'Arial, sans-serif',
+                                            size: 18,
                                             color: 'grey'
+                                          },},
+                                       yaxis: {
+                                            title: 'Proportion Of Injured Leaves',
+                                            titlefont: {
+                                            family: 'Arial, sans-serif',
+                                            size: 18,
+                                            color: 'grey',
+                                            range: [0,1]
+                                          },
+                                          }}; </script>";
+#if compare years
+}elsif($cgi->param('comparison-choice') eq "compare-years"){
+  my $selectedYear1 = $cgi->param('comparison-year1');
+  my $selectedYear2 = $cgi->param('comparison-year2');
+  $sqlString = "SELECT  curDate, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage from Plants
+                INNER JOIN UserEntries ON Plants.plantID = UserEntries.plantID
+                WHERE location='$selectedLocMarker' AND curYear='$selectedYear1';";
+  $sth = $dbh->prepare($sqlString);
+  $sth -> execute();
+
+  my $lastDate = '';
+
+  while (my @row = $sth->fetchrow_array()){
+      if ($lastDate ne $row[0]) {
+        $barDates = $barDates . "'$row[0]'" . ",";
+        $barValues0 = $barValues0 . "1-$row[2]/$row[1]" . ",";
+      }
+      $lastDate = $row[0];
+  }
+
+  $sqlString = "SELECT  curDate, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage from Plants
+                INNER JOIN UserEntries ON Plants.plantID = UserEntries.plantID
+                WHERE location='$selectedLocMarker' AND curYear='$selectedYear2';";
+  $sth = $dbh->prepare($sqlString);
+  $sth -> execute();
+
+  $lastDate = '';
+
+  while (my @row = $sth->fetchrow_array()){
+      if ($lastDate ne $row[0]) {
+        $barDates1 = $barDates1 . "'$row[0]'" . ",";
+        $barValues1 = $barValues1 . "1-$row[2]/$row[1]" . ",";
+      }
+      $lastDate = $row[0];
+  }
+
+  $barValues0 = "var line0 = {
+    x: [$barDates],
+    y: [$barValues0],
+    name: '$selectedYear1',
+    type: 'scatter'
+  };";
+  $barValues1 = "var line1 = {
+    x: [$barDates1],
+    y: [$barValues1],
+    name: '$selectedYear2',
+    type: 'scatter'
+  };";
+
+  $graphVariables = "<script> $barValues0 $barValues1 var dataBar = [line0,line1];</script>";
+  $graphTitle = "<script> var layoutBar = {title: '$selectedLoc: Compare Years',
+                                      xaxis: {
+                                            title: 'Day Of Year',
+                                            titlefont: {
+                                            family: 'Arial, sans-serif',
+                                            size: 18,
+                                            color: 'grey'
+                                          },},
+                                       yaxis: {
+                                            title: 'Proportion Of Injured Leaves',
+                                            titlefont: {
+                                            family: 'Arial, sans-serif',
+                                            size: 18,
+                                            color: 'grey',
+                                            range: [0,1]
                                           },
                                           }}; </script>";
 
@@ -291,8 +431,6 @@ if($graphType eq "single"){
 my %tt_options = (INCLUDE_PATH => 'tmps', ABSOLUTE => 1, EVAL_PERL => 1);
 my $tt = Template->new(\%tt_options);
 
-
-#Testing Sending javascript variables using templating - Hunter
 my $tt_vars;
 #Sending javascript variables using templating - Hunter
 my $tt_vars = {
