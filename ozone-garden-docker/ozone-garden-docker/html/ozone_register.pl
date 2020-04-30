@@ -9,8 +9,11 @@ use CGI qw(:standard);
 use CGI::Session qw/-ip-match/;
 use DBI;
 use Text::CSV;
+use Data::Entropy::Algorithms qw(rand_bits);
+use Digest;
 
-
+# uncomment line below to send debug messages to the browser, comment back when ready for production
+use CGI::Carp qw( warningsToBrowser fatalsToBrowser );
 
 # set the time vars
 my $now = localtime;
@@ -65,7 +68,8 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'register') {
 
 	# untaint the vars by matching against a regex of allowed characters
 	# check the name parameter
-	if ( $cgi->param('name') =~ /(^[a-zA-Z0-9]+$)/) {
+
+	if ( $cgi->param('name') =~ /(^[a-zA-Z0-9\s]+$)/) {
 		# data is good so set it
 		$name = $1;
 
@@ -89,7 +93,7 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'register') {
 	}
 	else {
 		# add error msg
-		$tt_vars->{'msg_err'} = "Error with email field, please try again";
+		$tt_vars->{'msg_err'} = "Invalid email address";
 
 		# data is bad so end
 		&showForm();
@@ -109,11 +113,14 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'register') {
 		# data is bad so end
 		&showForm();
 	}
+
 	# check the password parameter
 	if ( $cgi->param('password') =~ /(.+)/) {
 		# data is good so set it
 		$password = $1;
+		
 	}
+
 	else {
 		# data is bad so end
 		&showForm();
@@ -131,23 +138,81 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'register') {
 
 
 	# compare the passwords
-	if ( "$password" eq "$password2" ) {
-		# passwords match so register user
-		# encrypt the password
-		my $encPassword = &encryptPassword($password);
-
-		# TODO
-		# check DB for email already in and insert new user
-		$tt_vars->{'msg_err'} = "Register User";
-		&showForm();
-	}
-	else {
+	if ( "$password" ne "$password2" ) {
 		# passwords dont match so return with error
 		$tt_vars->{'msg_err'} = "Passwords do not match, please try again";
 
 		# data is bad so end
 		&showForm();
 	}
+
+
+#Location 
+	#=1600+Amphitheatre+Parkway,+Mountain+View,+CA
+	#StreetAddreess+,City,STATE
+	#Replace all spaces with +
+	
+	# my $streetAddreess = $cgi->param('street');
+	# my $cityState = $cgi->param('cityState');
+	# my $fullAddress = $streetAddreess . ',' . $cityState;
+	
+	#Replace all spaces with +
+	# $fullAddress =~ tr/''/+;
+
+	#  my $geocodeapi = "https://maps.googleapis.com/maps/api/geocode/";
+
+	#   my $url = $geocodeapi . $format . "?sensor=false&address=" . $address;
+
+	#   my $json = get($url);
+
+	#   my $d_json = decode_json( $json );
+
+	#   my $lat = $d_json->{results}->[0]->{geometry}->{location}->{lat};
+	#   my $lng = $d_json->{results}->[0]->{geometry}->{location}->{lng};
+
+	# Psuedo code check for valid address
+	# if lat && lng are error or invalid tt_Vars ="Invalid address"
+
+
+
+	#Database connection for inserting into usertable
+	my $data_source = "DBI:mysql:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:database=TannerTester";
+	my $username = "admin";
+	my $auth = "greenteam";
+	my $dbh = DBI->connect($data_source, $username, $auth,
+	          {RaiseError => 1} );
+	my $sth = $dbh->prepare("SELECT count(email) FROM UserTable WHERE email='$email';");
+	$sth -> execute();
+	my @row = $sth->fetchrow_array();
+	my $testEmail = $row[0];
+
+	# check to make sure that the email doesn't exist
+	if($testEmail == 0){
+		# make a salt
+		my $bs = rand_bits(16*8);
+		my $salt = "". $bs;
+		my $bcrypt = Digest->new('Bcrypt', cost => 12, salt => $salt);
+		$bcrypt->add($password);
+		my $digest = $bcrypt->digest;
+
+		#Insert new user into UserTable -- dummy value for locationid right now
+        my $insertIntoUserTable = "INSERT INTO UserTable(email, name, institution, password, salt, locationID) VALUES ('$email', '$name','$institution', '$digest', '$salt', 24);";
+        eval {$dbh->do($insertIntoUserTable)};
+        $sth = $dbh->prepare("SELECT userID FROM UserTable WHERE email='$email';");
+        $sth->execute();
+        @row = $sth->fetchrow_array();
+        my $uid = $row[0];
+    	$tt_vars->{'msg_err'} = "Garden manager user created. Awaiting location approval.";
+
+		&showForm();
+	}
+	else {
+		$tt_vars->{'msg_err'} = "Email is already in use";
+
+		# data is bad so end
+		&showForm();
+	}
+
 }
 # no form submit so show register page
 else {

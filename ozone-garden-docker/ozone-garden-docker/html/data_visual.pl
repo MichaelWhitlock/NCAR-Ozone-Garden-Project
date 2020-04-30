@@ -8,7 +8,8 @@ use Time::Piece;
 use CGI qw(:standard);
 use CGI::Session qw/-ip-match/;
 use DBI;
-use Text::CSV;
+#use Text::CSV;
+use Text::CSV qw( csv );
 
 # uncomment line below to send debug messages to the browser, comment back when ready for production
 use CGI::Carp qw( warningsToBrowser fatalsToBrowser );
@@ -42,14 +43,13 @@ $selectedLoc = $cgi->param('MapButton');
 
 #default mapButton to NCAR unless there is a cookie passed from data add
 my $data_cookie = $cgi->cookie('entry_cookie');
+
 if($selectedLoc eq ""){
   if ($data_cookie eq ""){
     $selectedLoc = "NCAR";
   }
   else{
-    my $sth = $dbh->prepare("SELECT  GardenName from GardenLocations
-                            INNER JOIN Plants ON Plants.location = GardenLocations.MarkerLabel
-                            WHERE plantID = $data_cookie;");
+    my $sth = $dbh->prepare("SELECT location FROM Plants WHERE plantID = $data_cookie;");
     $sth->execute();
     my @row = $sth->fetchrow_array();
     $selectedLoc = $row[0];
@@ -80,7 +80,7 @@ if ($graphType eq ""){
 
 my $locationsSelect = ".";
 #This code is stolen from main page map, it uses info from database to fill in garden location markers for the map
-my $sth = $dbh->prepare("SELECT Latitude,Longitude,MarkerLabel,GardenName FROM GardenLocations");
+my $sth = $dbh->prepare("SELECT Latitude,Longitude,MarkerLabel,GardenName FROM GardenLocations WHERE Status = 1");
 $sth -> execute();
 #using db info to create map markers with popups
 my $locations = "<script type='text/javascript'>";
@@ -454,6 +454,20 @@ if ($cgi->param('submit')) {
 	$tt_vars->{'msg_err'} = $data_cookie;
 }
 
+#Downlaod the data
+if ($cgi->param('Download')) {
+
+  # dev message
+  my $sth = $dbh->prepare("SELECT * FROM UserEntries;");
+  $sth->execute();
+
+  my @rows = $sth->fetchrow_array();
+  open my $fh, ">:encoding(utf8)", "new.csv" or die "new.csv: $!";
+  my $csv->say ($fh, $_) for @rows;
+  close $fh or die "new.csv: $!";
+  $tt_vars->{'msg_err'} = $data_cookie;
+
+}
 
 # set the template to use
 my $tt_template = 'data_visual.htm';

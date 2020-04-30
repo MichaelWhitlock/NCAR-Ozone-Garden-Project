@@ -40,7 +40,7 @@ my $username = "admin";
 my $auth = "greenteam";
 my $dbh = DBI->connect($data_source, $username, $auth,
           {RaiseError => 1} );
-my $sth = $dbh->prepare("SELECT Latitude,Longitude,MarkerLabel,GardenName FROM GardenLocations");
+my $sth = $dbh->prepare("SELECT Latitude,Longitude,MarkerLabel,GardenName FROM GardenLocations WHERE Status = 1");
 $sth -> execute();
 
 #using db info to create map markers with popups
@@ -58,9 +58,26 @@ while (my @row = $sth->fetchrow_array()){
 }
 $locations = $locations . "</script>";
 
-
 # cgi vars
 my $cgi = CGI->new;
+
+
+#cookie for userID
+my $data_cookie = $cgi->cookie('userID_cookie');
+my $userID;
+my $name = "Citizen Scientist";
+if ($data_cookie eq ""){
+    $userID = 0;
+  }
+  else{
+    $userID = $data_cookie;
+    my $sth = $dbh->prepare("SELECT name FROM UserTable WHERE UserID = $data_cookie;");
+    $sth->execute();
+    my @row = $sth->fetchrow_array();
+    $name = $row[0];
+}
+
+
 
 # tt vars
 my %tt_options = (INCLUDE_PATH => 'tmps', ABSOLUTE => 1, EVAL_PERL => 1);
@@ -105,6 +122,7 @@ my $insertIntoPLantTable;
 my $tt_vars = {
         mapMarkers => $locations,
         locationsSelect => $locationsSelect,
+        username => $name,
 };
 
 
@@ -186,7 +204,7 @@ if ($cgi->param('submit')) {
         my $dateDifference = $row[0];
 
         
-        $insertLineUserEntriesTable = "INSERT INTO UserEntries(curDate, curYear, plantID, userID, daysSinceEmergence, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage)VALUES("."CURDATE()". ", "."CURDATE()". ", "."$plantID".", ". "0".", ". "$dateDifference".", ". "$Leaf0sCounter".", ". "$Leaf1sCounter".", ". "$Leaf2sCounter".", ". "$Leaf3sCounter".", ". "$Leaf4sCounter".", ". "$Leaf5sCounter".", ". "$Leaf6sCounter".");";
+        $insertLineUserEntriesTable = "INSERT INTO UserEntries(curDate, curYear, plantID, userID, daysSinceEmergence, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage)VALUES("."CURDATE()". ", "."CURDATE()". ", "."$plantID".", ". "$userID".", ". "$dateDifference".", ". "$Leaf0sCounter".", ". "$Leaf1sCounter".", ". "$Leaf2sCounter".", ". "$Leaf3sCounter".", ". "$Leaf4sCounter".", ". "$Leaf5sCounter".", ". "$Leaf6sCounter".");";
 
         eval {$dbh->do($insertLineUserEntriesTable)};
 
