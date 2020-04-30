@@ -99,7 +99,7 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'register') {
 		&showForm();
 	}
 	# check the institution parameter
-	if ( $cgi->param('institution') =~ /(^[a-zA-Z0-9]+$)/) {
+	if ( $cgi->param('institution') =~ /(^[a-zA-Z0-9\s]+$)/) {
 		# data is good so set it
 		$institution = $1;
 

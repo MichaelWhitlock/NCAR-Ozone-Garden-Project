@@ -46,7 +46,7 @@
 
         <div class="form-group">
 
-            <label class="mb-0" for="street">Street Address<small class="text-muted"></small></label>
+            <label class="mb-0" for="street">Street Address of Ozone Garden<small class="text-muted"></small></label>
             <input name="street" type="text" id="street" class="form-control" placeholder="..." [% IF institution %] value="[% institution %]" [% END %]>
         </div>
 
@@ -89,9 +89,11 @@
         <div class="btn-group mt-4 w-100" role="group">
             <input type="hidden" name="formUser" value="register">
             <button class="btn btn-success" type="submit">Register</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick="window.location='/index.pl';">Close</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick="window.location='/index.pl';">Go Back</button>
         </div>
     </form>
+
+
 
     <!-- javascript -->
     [% INSERT '/var/www/html/styles/um/js/js-include.html' %]

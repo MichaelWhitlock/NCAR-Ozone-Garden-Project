@@ -189,21 +189,6 @@
                         <br>
                         <p>For more comments or questions contact Danica Lombardozzi [ <a href="dll@ucar.edu">dll@ucar.edu</a> ]</p>
 
-                    <form method="post" action="#ws">
-                        <input type="submit" class="btn btn-primary btn-block" name="submit" value="Submit" style="margin-top:2%;margin-bottom:2%;"></input>
-                        [% IF msg_err != "" %] 
-                            <div class="alert alert-danger center" role="alert">
-                                [% msg_err %]
-                            </div>
-                        [% END %]
-
-
-                        [% IF msg_suc != "" %] 
-                            <div class="alert alert-success center" role="alert">
-                                [% msg_suc %]
-                            </div>
-                        [% END %]
-                    </form>
 
                         <div class="modal fade" id="Map-Modal" tabindex="-1" role="dialog" aria-labelledby="ozone-modalLoginLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
@@ -227,21 +212,7 @@
                     </div>
                     </div>
 
-                     <form method="post" action="#download">
-                        <input type="submit" class="btn btn-primary btn-block" name="Download" value="Download" style="margin-top:2%;margin-bottom:2%;"></input>
-                        [% IF msg_err != "" %] 
-                            <div class="alert alert-danger center" role="alert">
-                                [% msg_err %]
-                            </div>
-                        [% END %]
-
-
-                        [% IF msg_suc != "" %] 
-                            <div class="alert alert-success center" role="alert">
-                                [% msg_suc %]
-                            </div>
-                        [% END %]
-                    </form> 
+                     
                 </div>
 
                 <div class="col-lg-4">
