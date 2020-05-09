@@ -105,6 +105,8 @@ GardenLocation has primary key GardenID. Is used to draw the leafs on the user i
 
 Notes:
 
+For testing purposes removing the images makes the docker build significantly quicker.
+
 Any page using the database needs the database information updated
 
 database line number for files
