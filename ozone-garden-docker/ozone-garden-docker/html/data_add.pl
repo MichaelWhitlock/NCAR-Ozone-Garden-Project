@@ -35,6 +35,12 @@ my $time_file = $now->strftime('%Y%m%d%H%M%S');
 my $email_ryanj = 'ryanj@ucar.edu';
 
 #Database connection for map markers -Hunter
+#
+#
+#WARNING
+#MUST BE CHANGED
+#
+#
 my $data_source = "DBI:mysql:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:database=TannerTester";
 my $username = "admin";
 my $auth = "greenteam";
@@ -119,6 +125,7 @@ my $char;
 my $insertLineUserEntriesTable;
 my $insertIntoPLantTable;
 
+#variables for the html
 my $tt_vars = {
         mapMarkers => $locations,
         locationsSelect => $locationsSelect,
@@ -138,7 +145,7 @@ if ($cgi->param('submit')) {
     for my $i (0..length($counter)-1){
         $char = substr($counter, $i, 1);
 
-        #cascading cases of the carasal 
+        #cascading cases for the carasal 
         #0=no data, 1 = 0% damage, 2 = 1_6% damage, 3 = 7-25
         #4 = 25-50, 5 = 51-75, 6 = 76-100
         if($char == 0){
@@ -163,8 +170,15 @@ if ($cgi->param('submit')) {
     #Gets the amount of leaves used
     $Leaf0sCounter = 10-$Leaf0sCounter + 1;
     
+    #Makes sure that there were leaves changed, a location, and a plant type
     if($Leaf0sCounter != 0 && $location ne "select-location" && $plantType ne "select-plant"){
         #DB connection
+        #
+        #
+        #WARNING
+        #MUST BE CHANGED
+        #
+        #
         my $user = "admin";
         my $auth = "greenteam";
         my $dsn = "DBI:mysql:database=TannerTester;host=greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com;port=3306";
@@ -204,23 +218,23 @@ if ($cgi->param('submit')) {
         my $dateDifference = $row[0];
 
         
+        #User entry MySQL line
         $insertLineUserEntriesTable = "INSERT INTO UserEntries(curDate, curYear, plantID, userID, daysSinceEmergence, NLeaves, 0_damage, 1_6_damage, 7_25_damage, 26_50_damage, 51_75_damage, 76_100_damage)VALUES("."CURDATE()". ", "."CURDATE()". ", "."$plantID".", ". "$userID".", ". "$dateDifference".", ". "$Leaf0sCounter".", ". "$Leaf1sCounter".", ". "$Leaf2sCounter".", ". "$Leaf3sCounter".", ". "$Leaf4sCounter".", ". "$Leaf5sCounter".", ". "$Leaf6sCounter".");";
-
         eval {$dbh->do($insertLineUserEntriesTable)};
 
+        #Cookie for data visualization for where the user put data for
         my $datavis_cookie = cookie( -NAME    => 'entry_cookie',
                     -VALUE   => $plantID,
                     -EXPIRES => '+10m');    # M for month, m for minute
                     
 
+        #Redirection to data visualization (assumes the user does not have multiple plants to collect data on)
         my $data_url  = "http://localhost/data_visual.pl";
-
         print redirect( -URL     => $data_url,
                         -COOKIE  => $datavis_cookie);
         
         #Output variable of the submit button
         $tt_vars->{'msg_err'} = "Data Submitted!";
-
         }
         $tt_vars->{'msg_err'} = "Missing Data Entries";
     }

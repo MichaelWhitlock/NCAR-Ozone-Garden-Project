@@ -54,32 +54,43 @@ $tt_vars->{'after'} = $after;
 # check which kind of user form was sent - login or register
 # if user is loging in
 if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'login') {
-	# TODO validate user
-	# push into the vars to return
-	#
+
+	
+	#Grabs form data
 	my $email = param('email');
 	my $password = param('password');
 
-
+	#
+	#
+	#WARNING
+	#MUST BE CHANGED
+	#
+	#
 	my $data_source = "DBI:mysql:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:database=TannerTester";
 	my $username = "admin";
 	my $auth = "greenteam";
 	my $dbh = DBI->connect($data_source, $username, $auth,
 	          {RaiseError => 1} );
+
+	#See if email exists and the salt if it does
 	my $sth = $dbh->prepare("SELECT count(email), salt FROM UserTable WHERE email='$email';");
 	$sth -> execute();
 	my @row = $sth->fetchrow_array();
 	my $testEmail = $row[0];
 
+	#Email existence check using the count
 	if($testEmail == 0){
 		$tt_vars->{'msg'} = "Email doesn't exist. Register now if you are a garden manager.";
 		&showForm();
 	}else{
+
+		#Salt grab then password computation
 		my $salt = $row[1];#Here
 		my $bcrypt = Digest->new('Bcrypt', cost => 12, salt => $salt);
 		$bcrypt->add($password);
 		my $digest = $bcrypt->digest;
 
+		#UserID grab
 		my $sth = $dbh->prepare("SELECT count(UserID), UserID, name FROM UserTable WHERE email='$email' AND password='$digest';");
 		$sth -> execute();
 		my @row = $sth->fetchrow_array();
@@ -91,7 +102,8 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'login') {
 			$tt_vars->{'msg'} = "This password not associated with username.";
 			&showForm();
 		}
-		else{#Database grabbing the userID
+		else{
+			#Password acceptance then putting it into a cookie
 			my $userID = $row[1];
 			my $name = $row[2];
 			$tt_vars->{'msg'} = "Hello ". $name;
@@ -102,6 +114,7 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'login') {
 
 			my $data_entry_url = "http://localhost/data_add.pl";
 
+			#Brings the user to data_entry after successful login
 			print redirect( -URL     => $data_entry_url,
 	                        -COOKIE  => $userID_cookie);
 		}

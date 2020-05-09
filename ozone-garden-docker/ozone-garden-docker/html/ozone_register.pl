@@ -147,7 +147,7 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'register') {
 	}
 
 
-#Location 
+#Location attempt, could not test due to google paywall
 	#=1600+Amphitheatre+Parkway,+Mountain+View,+CA
 	#StreetAddreess+,City,STATE
 	#Replace all spaces with +
@@ -176,6 +176,12 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'register') {
 
 
 	#Database connection for inserting into usertable
+	#
+	#
+	#WARNING
+	#MUST BE CHANGED
+	#
+	#
 	my $data_source = "DBI:mysql:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:greenteam.cfl3ojixyyg2.us-west-1.rds.amazonaws.com:database=TannerTester";
 	my $username = "admin";
 	my $auth = "greenteam";
@@ -192,6 +198,8 @@ if ( defined $cgi->param('formUser') && $cgi->param('formUser') eq 'register') {
 		my $bs = rand_bits(16*8);
 		my $salt = "". $bs;
 		my $bcrypt = Digest->new('Bcrypt', cost => 12, salt => $salt);
+
+		#Password encryption
 		$bcrypt->add($password);
 		my $digest = $bcrypt->digest;
 

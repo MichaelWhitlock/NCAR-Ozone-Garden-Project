@@ -44,6 +44,7 @@ $selectedLoc = $cgi->param('MapButton');
 #default mapButton to NCAR unless there is a cookie passed from data add
 my $data_cookie = $cgi->cookie('entry_cookie');
 
+#If-else to see if the user inputted data then went to data visualization. This is so that they see data relevant to them
 if($selectedLoc eq ""){
   if ($data_cookie eq ""){
     $selectedLoc = "NCAR";
